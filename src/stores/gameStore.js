@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useGameStore = defineStore('game', {
     state: () => ({
@@ -9,7 +10,7 @@ export const useGameStore = defineStore('game', {
         isGameOver: false,
         isGameRunning: false,
         pipes: [],
-        pipeSize: { width: 50, gap: 200 },
+        pipeSize: { width: 70, gap: 200 },
         rewards: [],
         rewardSize: { width: 80, height: 80 },
         score: 0,
@@ -18,8 +19,7 @@ export const useGameStore = defineStore('game', {
     actions: {
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
-            this.birdVelocity = -7;
-            console.log('fly')
+            this.birdVelocity = -8;
         },
         fall() {
             if (this.isGameOver || !this.isGameRunning) return;
@@ -37,7 +37,6 @@ export const useGameStore = defineStore('game', {
             const birdRight = this.birdPosition.x + this.birdSize.width;
             const birdBottom = this.birdPosition.y + this.birdSize.height;
 
-            // Проверка столкновения с трубами
             for (const pipe of this.pipes) {
                 const pipeRight = pipe.x + this.pipeSize.width;
                 const pipeGapTop = pipe.height;
@@ -52,7 +51,6 @@ export const useGameStore = defineStore('game', {
                 }
             }
 
-            // Проверка столкновений с наградами
             this.rewards = this.rewards.filter(reward => {
                 const birdRight = this.birdPosition.x + this.birdSize.width;
                 const birdBottom = this.birdPosition.y + this.birdSize.height;
@@ -147,6 +145,7 @@ export const useGameStore = defineStore('game', {
 
             if (!isOverlapping) {
                 this.rewards.push({
+                    id: uuidv4(), // добавляем уникальный идентификатор
                     x: rewardX,
                     y: rewardY
                 });

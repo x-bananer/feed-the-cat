@@ -30,23 +30,24 @@ export default {
 <style scoped>
 .pipe-top,
 .pipe-bottom {
-	width: 50px;
+	width: 70px;
     /* background-color: #E55229; */
     position: absolute;
-    filter: contrast(0.8) opacity(1);
+    /* filter: contrast(0.8) opacity(1); */
 	
     background-size: cover;
-    background-position: center;
+    /* background-position: center; */
     background-repeat: no-repeat;
     /* background: linear-gradient(rgb(99, 8, 125), rgb(212, 71, 47), rgb(161, 201, 57)) !important; */
 }
 
 .pipe-bottom {
-	background-image: url("/src/assets/pipes/Pipe-4.png");
+	background-image: url("/src/assets/pipes/Pipe-6.svg");
 }
 
 .pipe-top {
-	background-image: url("/src/assets/pipes/Pipe-5.png");
+	background-image: url("/src/assets/pipes/Pipe-6.svg");
+	transform: rotate(180deg);
 }
 /* 
 .pipe-bottom:before {
@@ -73,7 +74,7 @@ export default {
     height: calc(100% + 20px);
 } */
 
-.pipe-top {
+/* .pipe-top {
 	border-bottom-right-radius: 8px;
 	border-bottom-left-radius: 8px;
 }
@@ -82,5 +83,5 @@ export default {
 	border-top-right-radius: 8px;
 	border-top-left-radius: 8px;
 	
-}
+} */
 </style>

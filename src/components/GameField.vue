@@ -1,7 +1,6 @@
 <template>
 	<div class="game" @click="fly">
 		<div class="background-image" :style="backgroundStyle"></div>
-		<!-- Фон с фильтрами -->
 		<GameBird />
 		<GamePipe
 			v-for="(pipe, index) in pipes"
@@ -11,8 +10,8 @@
 			:height="pipe.height"
 		/>
 		<GameReward
-			v-for="(reward, index) in rewards"
-			:key="index"
+			v-for="reward in rewards"
+			:key="reward.id"
 			:x="reward.x"
 			:y="reward.y"
 		/>
@@ -41,8 +40,8 @@ export default {
 	components: { GameBird, GamePipe, GameReward },
 	data() {
 		return {
-			backgroundOpacity: 1, // Начальная прозрачность фона
-			backgroundContrast: 0.6, // Начальная контрастность фона
+			backgroundOpacity: 1,
+			backgroundContrast: 0.6,
 		};
 	},
 	computed: {
@@ -72,7 +71,7 @@ export default {
 		startGame() {
 			const gameStore = useGameStore();
 			gameStore.resetGame();
-			this.isLevelComplete = false; // сброс состояния завершения уровня
+			this.isLevelComplete = false;
 			this.gameInterval = setInterval(() => {
 				gameStore.fall();
 			}, 20);
@@ -117,11 +116,11 @@ export default {
 	top: 0;
 	left: 0;
 	background-image: url("/src/assets/backgounds/Moscow.png"); /* Укажите путь к вашему изображению */
-	background-size: cover; /* Обеспечивает покрытие всего экрана */
-	background-position: center; /* Центрирует изображение */
+	background-size: cover;
+	background-position: center;
 	filter: contrast(var(--background-contrast, 1))
-		opacity(var(--background-opacity, 1)); /* Устанавливаем фильтры через переменные */
-	z-index: -1; /* Размещаем изображение под остальными элементами */
+		opacity(var(--background-opacity, 1));
+	z-index: -1;
 }
 
 .score {

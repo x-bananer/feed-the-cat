@@ -3,19 +3,23 @@
 </template>
 
 <script>
+const images = [
+	require('@/assets/food/Food-1.png'),
+	require('@/assets/food/Food-2.png'),
+	require('@/assets/food/Food-3.png'),
+];
+
 export default {
 	props: ["x", "y"],
+	data() {
+		return {
+			selectedImage: null
+		};
+	},
+	created() {
+		this.selectedImage = images[Math.floor(Math.random() * images.length)];
+	},
 	computed: {
-		images() {
-			return [
-				require('@/assets/food/Food-1.png'),
-				require('@/assets/food/Food-2.png'),
-				require('@/assets/food/Food-3.png'),
-			];
-		},
-		selectedImage() {
-			return this.images[Math.floor(Math.random() * this.images.length)];
-		},
 		rewardStyle() {
 			return {
 				left: `${this.x}px`,
@@ -27,8 +31,8 @@ export default {
 				backgroundPosition: "center",
 				backgroundRepeat: "no-repeat"
 			};
-		},
-	},
+		}
+	}
 };
 </script>
 
@@ -37,4 +41,3 @@ export default {
 	position: absolute;
 }
 </style>
-
