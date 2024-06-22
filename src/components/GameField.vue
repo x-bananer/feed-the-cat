@@ -5,7 +5,6 @@
 			v-for="(pipe, index) in pipes"
 			:key="index"
 			:x="pipe.x"
-			:y="pipe.y"
 			:height="pipe.height"
 		/>
 		<GameReward
@@ -58,7 +57,7 @@ export default {
 		startGame() {
 			const gameStore = useGameStore();
 			gameStore.resetGame();
-			this.isLevelComplete = false; // сброс состояния завершения уровня
+			this.isLevelComplete = false;
 			this.gameInterval = setInterval(() => {
 				gameStore.fall();
 			}, 20);
