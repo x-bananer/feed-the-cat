@@ -5,7 +5,7 @@ export const useGameStore = defineStore('game', {
         birdPosition: { x: 100, y: 200 },
         birdSize: { width: 50, height: 50 },
         birdVelocity: 0,
-        gravity: 0.6,
+        gravity: 0.5,
         isGameOver: false,
         isGameRunning: false,
         pipes: [], // список труб
@@ -17,7 +17,7 @@ export const useGameStore = defineStore('game', {
     actions: {
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
-            this.birdVelocity = -10;
+            this.birdVelocity = -7;
         },
         fall() {
             if (this.isGameOver || !this.isGameRunning) return;
@@ -71,7 +71,7 @@ export const useGameStore = defineStore('game', {
         },
         moveElements() {
             this.pipes.forEach(pipe => {
-                pipe.x -= 2;
+                pipe.x -= 3;
             });
 
             if (this.pipes.length && this.pipes[0].x + this.pipeSize.width < 0) {
