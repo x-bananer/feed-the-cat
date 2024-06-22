@@ -1,0 +1,59 @@
+html,
+body {
+	min-height: 100vh;
+	scrollbar-gutter: stable;
+	font-size: 16px;
+}
+
+html,
+body,
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+    line-height: 1.4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	font-weight: normal;
+	font-style: normal;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+
+li,
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+input {
+	font-family: inherit;
+}
