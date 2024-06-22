@@ -10,8 +10,8 @@ export default {
 			return {
 				left: `${this.x}px`,
 				top: `${this.y}px`,
-				width: "120px",
-				height: "120px",
+				width: "80px",
+				height: "80px",
 			};
 		},
 	},

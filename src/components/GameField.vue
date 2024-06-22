@@ -57,7 +57,7 @@ export default {
 		startGame() {
 			const gameStore = useGameStore();
 			gameStore.resetGame();
-			this.isLevelComplete = false;
+			//this.isLevelComplete = false;
 			this.gameInterval = setInterval(() => {
 				gameStore.fall();
 			}, 20);
