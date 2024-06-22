@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useGameStore = defineStore('game', {
     state: () => ({
         birdPosition: { x: 100, y: 200 },
-        birdSize: { width: 50, height: 50 },
+        birdSize: { width: 60, height: 60 },
         birdVelocity: 0,
         gravity: 0.5,
         isGameOver: false,
@@ -19,6 +19,7 @@ export const useGameStore = defineStore('game', {
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
             this.birdVelocity = -7;
+            console.log('fly')
         },
         fall() {
             if (this.isGameOver || !this.isGameRunning) return;

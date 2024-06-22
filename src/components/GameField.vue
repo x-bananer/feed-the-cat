@@ -1,10 +1,13 @@
 <template>
 	<div class="game" @click="fly">
+		<div class="background-image" :style="backgroundStyle"></div>
+		<!-- Фон с фильтрами -->
 		<GameBird />
 		<GamePipe
 			v-for="(pipe, index) in pipes"
 			:key="index"
 			:x="pipe.x"
+			:y="pipe.y"
 			:height="pipe.height"
 		/>
 		<GameReward
@@ -36,6 +39,12 @@ import { mapState } from "pinia";
 
 export default {
 	components: { GameBird, GamePipe, GameReward },
+	data() {
+		return {
+			backgroundOpacity: 1, // Начальная прозрачность фона
+			backgroundContrast: 0.6, // Начальная контрастность фона
+		};
+	},
 	computed: {
 		...mapState(useGameStore, [
 			"pipes",
@@ -46,6 +55,12 @@ export default {
 			"isLevelComplete",
 			"level",
 		]),
+		backgroundStyle() {
+			return {
+				"--background-opacity": this.backgroundOpacity,
+				"--background-contrast": this.backgroundContrast,
+			};
+		},
 	},
 	methods: {
 		fly() {
@@ -57,7 +72,7 @@ export default {
 		startGame() {
 			const gameStore = useGameStore();
 			gameStore.resetGame();
-			//this.isLevelComplete = false;
+			this.isLevelComplete = false; // сброс состояния завершения уровня
 			this.gameInterval = setInterval(() => {
 				gameStore.fall();
 			}, 20);
@@ -91,10 +106,24 @@ export default {
 .game {
 	width: 100%;
 	height: 100vh;
-	background-color: skyblue;
 	overflow: hidden;
 	position: relative;
 }
+
+.background-image {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-image: url("/src/assets/backgounds/Moscow.png"); /* Укажите путь к вашему изображению */
+	background-size: cover; /* Обеспечивает покрытие всего экрана */
+	background-position: center; /* Центрирует изображение */
+	filter: contrast(var(--background-contrast, 1))
+		opacity(var(--background-opacity, 1)); /* Устанавливаем фильтры через переменные */
+	z-index: -1; /* Размещаем изображение под остальными элементами */
+}
+
 .score {
 	position: absolute;
 	top: 10px;
@@ -102,6 +131,7 @@ export default {
 	font-size: 24px;
 	color: white;
 }
+
 .game-over,
 .level-complete {
 	position: absolute;
