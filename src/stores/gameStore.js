@@ -8,12 +8,12 @@ export const useGameStore = defineStore('game', {
         gravity: 0.5,
         isGameOver: false,
         isGameRunning: false,
-        pipes: [], // список труб
+        pipes: [],
         pipeSize: { width: 50, gap: 200 },
         rewards: [],
-        rewardSize: { width: 120, height: 120 },
+        rewardSize: { width: 80, height: 80 },
         score: 0,
-        moveSpeed: 2, // скорость движения элементов
+        moveSpeed: 2,
     }),
     actions: {
         fly() {
@@ -83,7 +83,6 @@ export const useGameStore = defineStore('game', {
                 this.spawnPipe();
             }
 
-            // Генерация награды каждые 500 пикселей
             if (this.rewards.length === 0 || this.rewards[this.rewards.length - 1].x < window.innerWidth - 500) {
                 this.spawnReward();
             }
@@ -101,39 +100,53 @@ export const useGameStore = defineStore('game', {
             });
         },
         spawnReward() {
-            let rewardY;
-            let attempts = 0;
             const maxAttempts = 100;
+            let attempts = 0;
+            let rewardX, rewardY;
             let isOverlapping;
 
             do {
+                if (attempts >= maxAttempts) return;
+
+                rewardX = window.innerWidth;
                 rewardY = Math.floor(Math.random() * (window.innerHeight - this.rewardSize.height));
-                isOverlapping = this.pipes.some(pipe => {
+                isOverlapping = false;
+
+                for (const pipe of this.pipes) {
                     const pipeTop = pipe.height;
                     const pipeBottom = pipe.height + this.pipeSize.gap;
                     const rewardBottom = rewardY + this.rewardSize.height;
-                    return (
-                        (rewardY < pipeTop || rewardBottom > pipeBottom) &&
-                        pipe.x < window.innerWidth + this.pipeSize.width &&
-                        pipe.x + this.pipeSize.width > window.innerWidth
-                    );
-                });
+
+                    if (
+                        rewardX < pipe.x + this.pipeSize.width && rewardX + this.rewardSize.width > pipe.x &&
+                        (rewardY < pipeTop || rewardBottom > pipeBottom)
+                    ) {
+                        isOverlapping = true;
+                        break;
+                    }
+                }
 
                 if (!isOverlapping) {
-                    isOverlapping = this.rewards.some(reward => {
+                    for (const reward of this.rewards) {
                         const rewardBottom = reward.y + this.rewardSize.height;
                         const newRewardBottom = rewardY + this.rewardSize.height;
-                        return (
+
+                        if (
+                            rewardX < reward.x + this.rewardSize.width && rewardX + this.rewardSize.width > reward.x &&
                             rewardY < rewardBottom && newRewardBottom > reward.y
-                        );
-                    });
+                        ) {
+                            isOverlapping = true;
+                            break;
+                        }
+                    }
                 }
+
                 attempts++;
-            } while (isOverlapping && attempts < maxAttempts);
+            } while (isOverlapping);
 
             if (!isOverlapping) {
                 this.rewards.push({
-                    x: window.innerWidth,
+                    x: rewardX,
                     y: rewardY
                 });
             }
@@ -154,4 +167,3 @@ export const useGameStore = defineStore('game', {
         },
     },
 });
-
