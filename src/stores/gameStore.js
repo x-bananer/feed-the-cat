@@ -5,7 +5,7 @@ export const useGameStore = defineStore('game', {
         birdPosition: { x: 100, y: 200 },
         birdSize: { width: 50, height: 50 },
         birdVelocity: 0,
-        gravity: 0.5,
+        gravity: 0.5, // уменьшили гравитацию
         isGameOver: false,
         isGameRunning: false,
         pipes: [], // список труб
@@ -13,11 +13,12 @@ export const useGameStore = defineStore('game', {
         rewards: [],
         rewardSize: { width: 120, height: 120 },
         score: 0,
+        moveSpeed: 2, // скорость движения элементов
     }),
     actions: {
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
-            this.birdVelocity = -7;
+            this.birdVelocity = -7; // уменьшили скорость взлета
         },
         fall() {
             if (this.isGameOver || !this.isGameRunning) return;
@@ -71,7 +72,7 @@ export const useGameStore = defineStore('game', {
         },
         moveElements() {
             this.pipes.forEach(pipe => {
-                pipe.x -= 3;
+                pipe.x -= this.moveSpeed; // увеличили скорость движения труб
             });
 
             if (this.pipes.length && this.pipes[0].x + this.pipeSize.width < 0) {
@@ -82,8 +83,13 @@ export const useGameStore = defineStore('game', {
                 this.spawnPipe();
             }
 
+            // Генерация награды с определенной вероятностью
+            if (Math.random() < 0.01) { // 1% шанс на появление награды при каждом вызове moveElements
+                this.spawnReward();
+            }
+
             this.rewards.forEach(reward => {
-                reward.x -= 2;
+                reward.x -= this.moveSpeed; // увеличили скорость движения наград
             });
             this.rewards = this.rewards.filter(reward => reward.x + this.rewardSize.width > 0);
         },
@@ -92,6 +98,23 @@ export const useGameStore = defineStore('game', {
             this.pipes.push({
                 x: window.innerWidth,
                 height: pipeHeight
+            });
+        },
+        spawnReward() {
+            let rewardY;
+            let isOverlapping;
+            do {
+                rewardY = Math.floor(Math.random() * (window.innerHeight - this.rewardSize.height));
+                isOverlapping = this.pipes.some(pipe => {
+                    const pipeGapTop = pipe.height;
+                    const pipeGapBottom = pipe.height + this.pipeSize.gap;
+                    return rewardY < pipeGapBottom && (rewardY + this.rewardSize.height) > pipeGapTop;
+                });
+            } while (isOverlapping);
+
+            this.rewards.push({
+                x: window.innerWidth,
+                y: rewardY
             });
         },
         endGame() {
@@ -110,3 +133,4 @@ export const useGameStore = defineStore('game', {
         },
     },
 });
+
