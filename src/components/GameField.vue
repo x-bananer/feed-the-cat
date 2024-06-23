@@ -89,17 +89,9 @@ export default {
 			}
 		},
 		startGame() {
-			if (this.gameInterval) {
-				console.log('interval')
-				clearInterval(this.gameInterval); // Очищаем предыдущий интервал
-			}
 			const gameStore = useGameStore();
 			gameStore.setPipeWidth();
-			gameStore.resetGame();
-			this.isLevelComplete = false;
-			this.gameInterval = setInterval(() => {
-				gameStore.fall();
-			}, 20);
+			gameStore.startGame(); // Запускаем игру из store
 		},
 		startNextLevel() {
 			this.startGame();
@@ -109,18 +101,20 @@ export default {
 		this.startGame();
 	},
 	beforeUnmount() {
-		clearInterval(this.gameInterval);
+		const gameStore = useGameStore();
+		clearInterval(gameStore.gameInterval);
 	},
 	watch: {
 		isGameOver(newVal) {
+			const gameStore = useGameStore();
 			if (newVal) {
-				console.log('clearInterval')
-				clearInterval(this.gameInterval);
+				clearInterval(gameStore.gameInterval);
 			}
 		},
 		isGameRunning(newVal) {
+			const gameStore = useGameStore();
 			if (!newVal) {
-				clearInterval(this.gameInterval);
+				clearInterval(gameStore.gameInterval);
 			}
 		},
 	},
@@ -167,3 +161,4 @@ export default {
 	color: red;
 }
 </style>
+

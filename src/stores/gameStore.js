@@ -15,8 +15,8 @@ export const useGameStore = defineStore('game', {
         rewardSize: { width: 80, height: 80 },
         score: 0,
         moveSpeed: 2,
+        gameInterval: null,
     }),
-    
     actions: {
         setPipeWidth() {
             const screenHeight = window.innerHeight;
@@ -28,7 +28,6 @@ export const useGameStore = defineStore('game', {
             this.birdVelocity = -8;
         },
         fall() {
-            console.log('fall')
             if (this.isGameOver || !this.isGameRunning) return;
 
             this.birdVelocity += this.gravity;
@@ -37,7 +36,7 @@ export const useGameStore = defineStore('game', {
             const gameHeight = window.innerHeight;
 
             if (this.birdPosition.y > gameHeight - this.birdSize.height || this.birdPosition.y < 0) {
-               this.playSound('/audio/hit-4.wav');
+                this.playSound('/audio/hit-4.wav');
                 this.endGame();
                 return;
             }
@@ -54,7 +53,7 @@ export const useGameStore = defineStore('game', {
                 const birdInGap = this.birdPosition.y > pipeGapTop && birdBottom < pipeGapBottom;
 
                 if (horizontalCollision && !birdInGap) {
-                  this.playSound('/audio/hit-4.wav');
+                    this.playSound('/audio/hit-4.wav');
                     this.endGame();
                     return;
                 }
@@ -172,36 +171,13 @@ export const useGameStore = defineStore('game', {
             this.isGameRunning = false;
             this.birdVelocity = 0;
 
+            clearInterval(this.gameInterval);
+
             setTimeout(() => {
                 this.playSound('/audio/die-2.wav');
             }, 100);
-
-            const speed = 8;
-
-            const raiseHeight = this.birdPosition.y - 40;
-            const raiseSpeed = 5; 
-            const raiseInterval = setInterval(() => {
-                if (this.birdPosition.y > raiseHeight) {
-                    this.birdPosition.y -= raiseSpeed;
-                } else {
-                    clearInterval(raiseInterval);
-
-                    
-                    setTimeout(() => {
-                        const fallInterval = setInterval(() => {
-                            this.birdPosition.y += speed;
-
-                        
-                            if (this.birdPosition.y > window.innerHeight + 5000) {
-                                clearInterval(fallInterval);
-                            }
-                        }, 20);
-                    }, 0); 
-                }
-            }, 20);
         },
         resetGame() {
-            console.log('resetGame')
             this.birdPosition = { x: 100, y: 200 };
             this.birdVelocity = 0;
             this.isGameOver = false;
@@ -211,9 +187,19 @@ export const useGameStore = defineStore('game', {
             this.score = 0;
             this.gravity = 0.5;
             this.spawnPipe();
+
+            clearInterval(this.gameInterval);
+        },
+        startGame() {
+            this.resetGame();
+            this.isGameRunning = true;
+            this.gameInterval = setInterval(() => {
+                this.fall();
+            }, 20);
         },
     },
     getters: {
         getPipeWidth: (state) => state.pipeSize.width
     }
 });
+
