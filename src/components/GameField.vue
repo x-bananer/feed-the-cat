@@ -135,11 +135,10 @@ export default {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-image: url("/src/assets/backgounds/Moscow.png"); /* Укажите путь к вашему изображению */
+	background-image: url("/src/assets/backgounds/Moscow.png");
 	background-size: cover;
 	background-position: center;
-	filter: contrast(var(--background-contrast, 1))
-		opacity(var(--background-opacity, 1));
+	filter: contrast(var(--background-contrast, 1)) opacity(var(--background-opacity, 1));
 	z-index: -1;
 }
 
@@ -161,4 +160,3 @@ export default {
 	color: red;
 }
 </style>
-

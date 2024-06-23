@@ -176,6 +176,29 @@ export const useGameStore = defineStore('game', {
             setTimeout(() => {
                 this.playSound('/audio/die-2.wav');
             }, 100);
+
+            this.animateFall();
+        },
+        animateFall() {
+            const speed = 8;
+            const raiseHeight = this.birdPosition.y - 40;
+            const raiseSpeed = 5;
+
+            const raiseInterval = setInterval(() => {
+                if (this.birdPosition.y > raiseHeight) {
+                    this.birdPosition.y -= raiseSpeed;
+                } else {
+                    clearInterval(raiseInterval);
+                    setTimeout(() => {
+                        const fallInterval = setInterval(() => {
+                            this.birdPosition.y += speed;
+                            if (this.birdPosition.y > window.innerHeight + 50) {
+                                clearInterval(fallInterval);
+                            }
+                        }, 20);
+                    }, 0);
+                }
+            }, 20);
         },
         resetGame() {
             this.birdPosition = { x: 100, y: 200 };
@@ -192,7 +215,6 @@ export const useGameStore = defineStore('game', {
         },
         startGame() {
             this.resetGame();
-            this.isGameRunning = true;
             this.gameInterval = setInterval(() => {
                 this.fall();
             }, 20);
@@ -202,4 +224,3 @@ export const useGameStore = defineStore('game', {
         getPipeWidth: (state) => state.pipeSize.width
     }
 });
-
