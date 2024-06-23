@@ -1,17 +1,34 @@
 <template>
 	<div id="app">
-		<GameField />
+		<!-- <GameField  /> -->
+		<GameCity v-if="mode === 'feedCats'" />
+		<GameStart @chooseMode="onChooseMode" />
+
 	</div>
 </template>
 
 <script>
-import GameField from "./components/GameField.vue";
+// import GameField from "./components/GameField.vue";
+import GameStart from "./components/GameStart.vue";
+import GameCity from "./components/GameCity.vue";
 
 export default {
 	name: "App",
 	components: {
-		GameField,
+		// GameField,
+		GameStart,
+		GameCity,
 	},
+	data() {
+		return {
+			mode: '',
+		}
+	},
+	methods: {
+		onChooseMode(mode) {
+			this.mode = mode;
+		}
+	}
 };
 </script>
 
