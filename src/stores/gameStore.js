@@ -16,6 +16,7 @@ export const useGameStore = defineStore('game', {
         score: 0,
         moveSpeed: 2,
     }),
+    
     actions: {
         setPipeWidth() {
             const screenHeight = window.innerHeight;
@@ -27,6 +28,7 @@ export const useGameStore = defineStore('game', {
             this.birdVelocity = -8;
         },
         fall() {
+            console.log('fall')
             if (this.isGameOver || !this.isGameRunning) return;
 
             this.birdVelocity += this.gravity;
@@ -35,6 +37,7 @@ export const useGameStore = defineStore('game', {
             const gameHeight = window.innerHeight;
 
             if (this.birdPosition.y > gameHeight - this.birdSize.height || this.birdPosition.y < 0) {
+               this.playSound('/audio/hit-4.wav');
                 this.endGame();
                 return;
             }
@@ -51,6 +54,7 @@ export const useGameStore = defineStore('game', {
                 const birdInGap = this.birdPosition.y > pipeGapTop && birdBottom < pipeGapBottom;
 
                 if (horizontalCollision && !birdInGap) {
+                  this.playSound('/audio/hit-4.wav');
                     this.endGame();
                     return;
                 }
@@ -66,6 +70,7 @@ export const useGameStore = defineStore('game', {
                 const verticalCollision = this.birdPosition.y < rewardBottom && birdBottom > reward.y;
 
                 if (horizontalCollision && verticalCollision) {
+                    this.playSound('/audio/point-2.wav');
                     this.score += 1;
                     return false;
                 }
@@ -150,17 +155,53 @@ export const useGameStore = defineStore('game', {
 
             if (!isOverlapping) {
                 this.rewards.push({
-                    id: uuidv4(), // добавляем уникальный идентификатор
+                    id: uuidv4(),
                     x: rewardX,
                     y: rewardY
                 });
             }
         },
+        playSound(src) {
+            const audio = new Audio(src);
+            audio.play().catch(error => {
+                console.error('Error playing sound:', error);
+            });
+        },
         endGame() {
             this.isGameOver = true;
             this.isGameRunning = false;
+            this.birdVelocity = 0;
+
+            setTimeout(() => {
+                this.playSound('/audio/die-2.wav');
+            }, 100);
+
+            const speed = 8;
+
+            const raiseHeight = this.birdPosition.y - 40;
+            const raiseSpeed = 5; 
+            const raiseInterval = setInterval(() => {
+                if (this.birdPosition.y > raiseHeight) {
+                    this.birdPosition.y -= raiseSpeed;
+                } else {
+                    clearInterval(raiseInterval);
+
+                    
+                    setTimeout(() => {
+                        const fallInterval = setInterval(() => {
+                            this.birdPosition.y += speed;
+
+                        
+                            if (this.birdPosition.y > window.innerHeight + 5000) {
+                                clearInterval(fallInterval);
+                            }
+                        }, 20);
+                    }, 0); 
+                }
+            }, 20);
         },
         resetGame() {
+            console.log('resetGame')
             this.birdPosition = { x: 100, y: 200 };
             this.birdVelocity = 0;
             this.isGameOver = false;
@@ -168,6 +209,7 @@ export const useGameStore = defineStore('game', {
             this.pipes = [];
             this.rewards = [];
             this.score = 0;
+            this.gravity = 0.5;
             this.spawnPipe();
         },
     },

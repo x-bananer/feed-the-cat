@@ -24,11 +24,11 @@
 		<div class="score">Score: {{ score }}</div>
 		<div v-if="isGameOver" class="game-over">
 			Game Over
-			<button @click="startGame">Start</button>
+			<button @mousedown="startGame" @touchstart="startGame">Start</button>
 		</div>
 		<div v-if="isLevelComplete" class="level-complete">
 			<p>Поздравляем!</p>
-			<button @click="startNextLevel">
+			<button @mousedown="startNextLevel" @touchstart="startNextLevel">
 				{{ level === 3 ? "Ты победил!" : "На следующий уровень" }}
 			</button>
 		</div>
@@ -89,8 +89,12 @@ export default {
 			}
 		},
 		startGame() {
+			if (this.gameInterval) {
+				console.log('interval')
+				clearInterval(this.gameInterval); // Очищаем предыдущий интервал
+			}
 			const gameStore = useGameStore();
-			gameStore.setPipeWidth(); // Устанавливаем ширину трубы при запуске игры
+			gameStore.setPipeWidth();
 			gameStore.resetGame();
 			this.isLevelComplete = false;
 			this.gameInterval = setInterval(() => {
@@ -110,6 +114,7 @@ export default {
 	watch: {
 		isGameOver(newVal) {
 			if (newVal) {
+				console.log('clearInterval')
 				clearInterval(this.gameInterval);
 			}
 		},

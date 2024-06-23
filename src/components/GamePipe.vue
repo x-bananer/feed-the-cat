@@ -44,7 +44,7 @@ export default {
 }
 
 .pipe-bottom {
-	background-image: url("/src/assets/pipes/Pipe-7.svg");
+	background-image: url("/src/assets/pipes/Pipe-6.svg");
 }
 
 .pipe-top {
