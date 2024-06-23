@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<!-- <GameField  /> -->
+		<GameField v-if="mode === 'game'"  />
 		<GameCity v-if="mode === 'feedCats'" />
 		<GameStart @chooseMode="onChooseMode" />
 
@@ -8,14 +8,16 @@
 </template>
 
 <script>
-// import GameField from "./components/GameField.vue";
+import { mapState } from "pinia";
+import { useGameStore } from "@/stores/gameStore";
+import GameField from "./components/GameField.vue";
 import GameStart from "./components/GameStart.vue";
 import GameCity from "./components/GameCity.vue";
 
 export default {
 	name: "App",
 	components: {
-		// GameField,
+		GameField,
 		GameStart,
 		GameCity,
 	},
@@ -24,10 +26,20 @@ export default {
 			mode: '',
 		}
 	},
+	computed: {
+		...mapState(useGameStore, [
+			"cityName"
+		]),
+	},	
 	methods: {
 		onChooseMode(mode) {
 			this.mode = mode;
-		}
+		},
+	},
+	watch: {
+		cityName() {
+			this.mode = 'game';
+		} 
 	}
 };
 </script>

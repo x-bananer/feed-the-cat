@@ -58,10 +58,10 @@ export default {
 	data() {
 		return {
 			backgroundOpacity: 1,
-			backgroundContrast: 0.6,
+			backgroundContrast: 0.7,
 			touchStartTime: null,
 			lastInteractionTime: 0,
-			interactionDelay: 100, // Задержка между взаимодействиями
+			interactionDelay: 100, 
 		};
 	},
 	computed: {
@@ -73,11 +73,22 @@ export default {
 			"isGameRunning",
 			"isLevelComplete",
 			"level",
+			"cityName"
 		]),
+		backgroundImages() {
+			return {
+				Moscow: require('@/assets/backgounds/Moscow.png'),
+				Kair: require('@/assets/backgounds/Kair.png'),
+				Istanbul: require('@/assets/backgounds/Istanbul.png'),
+				Minsk: require('@/assets/backgounds/Minsk.png'),
+			};
+		},
 		backgroundStyle() {
+			const imageUrl = this.backgroundImages[this.cityName] || this.backgroundImages.Moscow;
 			return {
 				"--background-opacity": this.backgroundOpacity,
 				"--background-contrast": this.backgroundContrast,
+				"background-image": `url(${imageUrl})`,
 			};
 		},
 	},
@@ -144,13 +155,13 @@ export default {
 }
 
 .background-image {
-	image-rendering: pixelated;
+	/* image-rendering: pixelated; */
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-image: url("/src/assets/backgounds/Moscow.png");
+	/* background-image: url("/src/assets/backgounds/${cityName}.png"); */
 	background-size: cover;
 	background-position: center;
 	filter: contrast(var(--background-contrast, 1))

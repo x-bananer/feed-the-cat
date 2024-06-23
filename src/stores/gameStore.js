@@ -16,6 +16,7 @@ export const useGameStore = defineStore('game', {
         score: 0,
         moveSpeed: 2,
         gameInterval: null,
+        cityName: '',
     }),
     actions: {
         setPipeWidth() {
@@ -221,6 +222,9 @@ export const useGameStore = defineStore('game', {
                 this.fall();
             }, 20);
         },
+        setCity(city) {
+            this.cityName = city;
+        }
     },
     getters: {
         getPipeWidth: (state) => state.pipeSize.width
