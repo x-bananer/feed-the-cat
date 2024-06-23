@@ -16,13 +16,21 @@ export const useGameStore = defineStore('game', {
         score: 0,
         moveSpeed: 2,
         gameInterval: null,
-        cityName: '',
+        currentCityName: '',
+        currentPipeImage: '',
     }),
     actions: {
         setPipeWidth() {
             const screenHeight = window.innerHeight;
             const ratio = 70 / 667;
             this.pipeSize.width = screenHeight * ratio;
+        },
+        setRandomPipeImage() {
+            const images = [
+                require('@/assets/pipes/Pipe-6.svg'),
+                require('@/assets/pipes/Pipe-7.svg')
+            ];
+            this.currentPipeImage = images[Math.floor(Math.random() * images.length)];
         },
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
@@ -211,6 +219,7 @@ export const useGameStore = defineStore('game', {
             this.rewards = [];
             this.score = 0;
             this.gravity = 0.5;
+            this.setRandomPipeImage();
             this.spawnPipe();
 
             clearInterval(this.gameInterval);
@@ -223,10 +232,11 @@ export const useGameStore = defineStore('game', {
             }, 20);
         },
         setCity(city) {
-            this.cityName = city;
+            this.currentCityName = city;
         }
     },
     getters: {
-        getPipeWidth: (state) => state.pipeSize.width
+        getPipeWidth: (state) => state.pipeSize.width,
+        getCurrentPipeImage: (state) => state.currentPipeImage,
     }
 });

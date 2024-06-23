@@ -10,15 +10,14 @@ import { useGameStore } from "@/stores/gameStore";
 
 export default {
 	props: ["x", "height"],
-	data() {
-		return {
-			selectedImage: this.getRandomPipeImage(),
-		};
-	},
 	computed: {
 		pipeWidth() {
 			const gameStore = useGameStore();
 			return gameStore.getPipeWidth;
+		},
+		pipeImage() {
+			const gameStore = useGameStore();
+			return gameStore.getCurrentPipeImage;
 		},
 		pipeTopStyle() {
 			return {
@@ -26,7 +25,7 @@ export default {
 				left: `${this.x}px`,
 				height: `${this.height}px`,
 				top: 0,
-				backgroundImage: `url(${this.selectedImage})`,
+				backgroundImage: `url(${this.pipeImage})`,
 				transform: "rotate(180deg)",
 			};
 		},
@@ -36,17 +35,8 @@ export default {
 				left: `${this.x}px`,
 				height: `calc(100vh - ${this.height + 200}px)`,
 				top: `${this.height + 200}px`,
-				backgroundImage: `url(${this.selectedImage})`,
+				backgroundImage: `url(${this.pipeImage})`,
 			};
-		},
-	},
-	methods: {
-		getRandomPipeImage() {
-			const images = [
-				require("@/assets/pipes/Pipe-6.svg"),
-				require("@/assets/pipes/Pipe-7.svg"),
-			];
-			return images[Math.floor(Math.random() * images.length)];
 		},
 	},
 };

@@ -28,7 +28,7 @@ export default {
 	},
 	computed: {
 		...mapState(useGameStore, [
-			"cityName"
+			"currentCityName"
 		]),
 	},	
 	methods: {
@@ -37,7 +37,7 @@ export default {
 		},
 	},
 	watch: {
-		cityName() {
+		currentCityName() {
 			this.mode = 'game';
 		} 
 	}

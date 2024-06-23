@@ -73,7 +73,7 @@ export default {
 			"isGameRunning",
 			"isLevelComplete",
 			"level",
-			"cityName"
+			"currentCityName"
 		]),
 		backgroundImages() {
 			return {
@@ -84,7 +84,7 @@ export default {
 			};
 		},
 		backgroundStyle() {
-			const imageUrl = this.backgroundImages[this.cityName] || this.backgroundImages.Moscow;
+			const imageUrl = this.backgroundImages[this.currentCityName] || this.backgroundImages.Moscow;
 			return {
 				"--background-opacity": this.backgroundOpacity,
 				"--background-contrast": this.backgroundContrast,
@@ -161,7 +161,7 @@ export default {
 	height: 100%;
 	top: 0;
 	left: 0;
-	/* background-image: url("/src/assets/backgounds/${cityName}.png"); */
+	/* background-image: url("/src/assets/backgounds/${currentCityName}.png"); */
 	background-size: cover;
 	background-position: center;
 	filter: contrast(var(--background-contrast, 1))
