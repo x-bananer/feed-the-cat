@@ -10,13 +10,18 @@ export const useGameStore = defineStore('game', {
         isGameOver: false,
         isGameRunning: false,
         pipes: [],
-        pipeSize: { width: 70, gap: 200 },
+        pipeSize: { width: 80, gap: 200 },
         rewards: [],
         rewardSize: { width: 80, height: 80 },
         score: 0,
         moveSpeed: 2,
     }),
     actions: {
+        setPipeWidth() {
+            const screenHeight = window.innerHeight;
+            const ratio = 70 / 667;
+            this.pipeSize.width = screenHeight * ratio;
+        },
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
             this.birdVelocity = -8;
@@ -166,4 +171,7 @@ export const useGameStore = defineStore('game', {
             this.spawnPipe();
         },
     },
+    getters: {
+        getPipeWidth: (state) => state.pipeSize.width
+    }
 });

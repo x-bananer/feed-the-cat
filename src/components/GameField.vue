@@ -1,5 +1,11 @@
 <template>
-	<div class="game" @click="fly">
+	<div
+		class="game"
+		@mousedown="handleInteraction"
+		@touchstart="handleInteraction"
+		@touchmove.prevent
+		@touchend.prevent
+	>
 		<div class="background-image" :style="backgroundStyle"></div>
 		<GameBird />
 		<GamePipe
@@ -42,6 +48,9 @@ export default {
 		return {
 			backgroundOpacity: 1,
 			backgroundContrast: 0.6,
+			touchStartTime: null,
+			lastInteractionTime: 0,
+			interactionDelay: 100, // Задержка между взаимодействиями
 		};
 	},
 	computed: {
@@ -62,6 +71,17 @@ export default {
 		},
 	},
 	methods: {
+		handleInteraction(event) {
+			event.preventDefault();
+
+			const currentTime = Date.now();
+			if (currentTime - this.lastInteractionTime < this.interactionDelay) {
+				return;
+			}
+
+			this.lastInteractionTime = currentTime;
+			this.fly();
+		},
 		fly() {
 			const gameStore = useGameStore();
 			if (!this.isGameOver && !this.isLevelComplete) {
@@ -70,6 +90,7 @@ export default {
 		},
 		startGame() {
 			const gameStore = useGameStore();
+			gameStore.setPipeWidth(); // Устанавливаем ширину трубы при запуске игры
 			gameStore.resetGame();
 			this.isLevelComplete = false;
 			this.gameInterval = setInterval(() => {
