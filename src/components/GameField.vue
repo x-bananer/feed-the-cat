@@ -6,6 +6,12 @@
 		@touchmove.prevent
 		@touchend.prevent
 	>
+
+	<!-- <div class="button play">PLAY</div>
+    <div class="button pause">PAUSE</div>
+    <div class="button loser">LOSER</div>
+    <div class="button done">DONE</div> -->
+
 		<div class="background-image" :style="backgroundStyle"></div>
 		<GameBird />
 		<GamePipe
@@ -21,10 +27,15 @@
 			:x="reward.x"
 			:y="reward.y"
 		/>
-		<div class="score">Score: {{ score }}</div>
+		<div class="score">Собрано: {{ score }}</div>
 		<div v-if="isGameOver" class="game-over">
-			Game Over
-			<button @mousedown="startGame" @touchstart="startGame">Start</button>
+			<p style="margin-bottom: 10px">
+				Вы упали
+			</p>
+			<p style="margin-bottom: 16px; font-size: 16px;">
+				Только у кошек девять жизней
+			</p>
+			<div class="button play" @mousedown="startGame" @touchstart="startGame">Ещё раз</div>
 		</div>
 		<div v-if="isLevelComplete" class="level-complete">
 			<p>Поздравляем!</p>
@@ -75,7 +86,10 @@ export default {
 			event.preventDefault();
 
 			const currentTime = Date.now();
-			if (currentTime - this.lastInteractionTime < this.interactionDelay) {
+			if (
+				currentTime - this.lastInteractionTime <
+				this.interactionDelay
+			) {
 				return;
 			}
 
@@ -91,7 +105,7 @@ export default {
 		startGame() {
 			const gameStore = useGameStore();
 			gameStore.setPipeWidth();
-			gameStore.startGame(); // Запускаем игру из store
+			gameStore.startGame();
 		},
 		startNextLevel() {
 			this.startGame();
@@ -130,6 +144,7 @@ export default {
 }
 
 .background-image {
+	image-rendering: pixelated;
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -138,7 +153,8 @@ export default {
 	background-image: url("/src/assets/backgounds/Moscow.png");
 	background-size: cover;
 	background-position: center;
-	filter: contrast(var(--background-contrast, 1)) opacity(var(--background-opacity, 1));
+	filter: contrast(var(--background-contrast, 1))
+		opacity(var(--background-opacity, 1));
 	z-index: -1;
 }
 
@@ -158,5 +174,21 @@ export default {
 	transform: translate(-50%, -50%);
 	font-size: 48px;
 	color: red;
+}
+
+.game-over {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	text-align: center;
+	color: #ffffff;
+	flex-direction: column;
+	font-size: 32px;
+	background: rgba(96, 128, 192, 0.8);
+	/* border-radius: 8px; */
+	padding: 24px 16px;
+	width: calc(100vw - 40px);
+	border: 4px solid rgb(77, 102, 153);
+	box-shadow: 4px 4px rgb(61, 82, 123);
 }
 </style>

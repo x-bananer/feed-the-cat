@@ -24,8 +24,8 @@ export default {
 			return {
 				left: `${this.x}px`,
 				top: `${this.y}px`,
-				width: "80px",
-				height: "80px",
+				width: "60px",
+				height: "60px",
 				backgroundImage: `url(${this.selectedImage})`,
 				backgroundSize: "contain",
 				backgroundPosition: "center",

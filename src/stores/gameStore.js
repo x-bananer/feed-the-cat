@@ -12,7 +12,7 @@ export const useGameStore = defineStore('game', {
         pipes: [],
         pipeSize: { width: 80, gap: 200 },
         rewards: [],
-        rewardSize: { width: 80, height: 80 },
+        rewardSize: { width: 60, height: 60 },
         score: 0,
         moveSpeed: 2,
         gameInterval: null,
@@ -194,6 +194,7 @@ export const useGameStore = defineStore('game', {
                             this.birdPosition.y += speed;
                             if (this.birdPosition.y > window.innerHeight + 50) {
                                 clearInterval(fallInterval);
+                                this.isGameOver = true;
                             }
                         }, 20);
                     }, 0);
@@ -216,6 +217,7 @@ export const useGameStore = defineStore('game', {
         startGame() {
             this.resetGame();
             this.gameInterval = setInterval(() => {
+                if (!this.isGameRunning) return;
                 this.fall();
             }, 20);
         },
