@@ -1,11 +1,8 @@
 <template>
 	<div class="page">
 		<div class="page__container">
-			<div class="button green" @click="onClickChooseMode('story')">
-				Кормить котов
-			</div>
 			<div class="button blue" @click="onClickChooseMode('free')">
-				Свободный режим
+				Кормить котов
 			</div>
 		</div>
 	</div>

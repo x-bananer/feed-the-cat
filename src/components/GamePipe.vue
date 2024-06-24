@@ -1,23 +1,23 @@
 <template>
 	<div>
-		<div class="pipe-top" :style="pipeTopStyle"></div>
-		<div class="pipe-bottom" :style="pipeBottomStyle"></div>
+		<div class="pipe-top" :class="pipeColorClass" :style="pipeTopStyle"></div>
+		<div class="pipe-bottom" :class="pipeColorClass" :style="pipeBottomStyle"></div>
 	</div>
 </template>
 
 <script>
 import { useGameStore } from "@/stores/gameStore";
+import { mapState } from "pinia";
 
 export default {
 	props: ["x", "height"],
 	computed: {
+		...mapState(useGameStore, [
+			"currentCityName",
+		]),
 		pipeWidth() {
 			const gameStore = useGameStore();
 			return gameStore.getPipeWidth;
-		},
-		pipeImage() {
-			const gameStore = useGameStore();
-			return gameStore.getCurrentPipeImage;
 		},
 		pipeTopStyle() {
 			return {
@@ -25,8 +25,7 @@ export default {
 				left: `${this.x}px`,
 				height: `${this.height}px`,
 				top: 0,
-				backgroundImage: `url(${this.pipeImage})`,
-				transform: "rotate(180deg)",
+				
 			};
 		},
 		pipeBottomStyle() {
@@ -35,9 +34,18 @@ export default {
 				left: `${this.x}px`,
 				height: `calc(100vh - ${this.height + 200}px)`,
 				top: `${this.height + 200}px`,
-				backgroundImage: `url(${this.pipeImage})`,
 			};
 		},
+		pipeColorClass() {
+			const vars = {
+				Minsk: 'pipe-green',
+				Kair: 'pipe-green',
+				Moscow: 'pipe-red',
+				Istanbul: 'pipe-red',
+			}
+			return vars[this.currentCityName] || 'pipe-green';
+			//if (this.currentCityName === 'Minsk' || this.currentCityName === 'Kair')
+		},	
 	},
 };
 </script>
@@ -48,5 +56,17 @@ export default {
 	position: absolute;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+.pipe-top {
+	transform: rotate(180deg);
+}
+
+.pipe-red {
+	background-image: url('../assets/pipes/Pipe-6.svg');
+}
+
+.pipe-green {
+	background-image: url('../assets/pipes/Pipe-7.svg');
 }
 </style>

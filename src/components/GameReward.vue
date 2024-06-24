@@ -1,13 +1,9 @@
 <template>
-	<div class="reward" :style="rewardStyle"></div>
+	<div class="reward" :class="'reward-' + selectedImage" :style="rewardStyle"></div>
 </template>
 
 <script>
-const images = [
-	require('@/assets/food/Food-1.png'),
-	require('@/assets/food/Food-2.png'),
-	require('@/assets/food/Food-3.png'),
-];
+const images = [1, 2, 3];
 
 export default {
 	props: ["x", "y"],
@@ -26,7 +22,6 @@ export default {
 				top: `${this.y}px`,
 				width: "60px",
 				height: "60px",
-				backgroundImage: `url(${this.selectedImage})`,
 				backgroundSize: "contain",
 				backgroundPosition: "center",
 				backgroundRepeat: "no-repeat"
@@ -39,5 +34,16 @@ export default {
 <style scoped>
 .reward {
 	position: absolute;
+}
+.reward-1 {
+	background-image: url('../assets/food/Food-1.png');
+}
+
+.reward-2 {
+	background-image: url('../assets/food/Food-2.png');
+}
+
+.reward-3 {
+	background-image: url('../assets/food/Food-3.png');
 }
 </style>

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const useGameStore = defineStore('game', {
     state: () => ({
-        birdPosition: { x: 100, y: 200 },
+        birdPosition: { x: 100, y: 300 },
         birdSize: { width: 60, height: 60 },
         birdVelocity: 0,
         gravity: 0.5,
@@ -14,10 +14,9 @@ export const useGameStore = defineStore('game', {
         rewards: [],
         rewardSize: { width: 60, height: 60 },
         score: 0,
-        moveSpeed: 3,
+        moveSpeed: 4,
         gameInterval: null,
         currentCityName: '',
-        currentPipeImage: '',
 
         modes: {
             free: false,
@@ -48,13 +47,6 @@ export const useGameStore = defineStore('game', {
             const screenHeight = window.innerHeight;
             const ratio = 100 / 844;
             this.pipeSize.width = screenHeight * ratio;
-        },
-        setRandomPipeImage() {
-            const images = [
-                require('@/assets/pipes/Pipe-6.svg'),
-                require('@/assets/pipes/Pipe-7.svg')
-            ];
-            this.currentPipeImage = images[Math.floor(Math.random() * images.length)];
         },
         fly() {
             if (!this.isGameRunning) this.isGameRunning = true;
@@ -235,7 +227,7 @@ export const useGameStore = defineStore('game', {
             }, 20);
         },
         resetGame() {
-            this.birdPosition = { x: 100, y: 200 };
+            this.birdPosition = { x: 100, y: 300 };
             this.birdVelocity = 0;
             this.isGameOver = false;
             this.isGameRunning = false;
@@ -243,7 +235,6 @@ export const useGameStore = defineStore('game', {
             this.rewards = [];
             this.score = 0;
             this.gravity = 0.5;
-            this.setRandomPipeImage();
             this.spawnPipe();
 
             clearInterval(this.gameInterval);
@@ -261,6 +252,5 @@ export const useGameStore = defineStore('game', {
     },
     getters: {
         getPipeWidth: (state) => state.pipeSize.width,
-        getCurrentPipeImage: (state) => state.currentPipeImage,
     }
 });

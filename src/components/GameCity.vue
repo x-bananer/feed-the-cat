@@ -10,7 +10,7 @@
 						<div class="page__card" @click="onClickCity('Moscow')">
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Moscow.png"
+								src="../assets/backgounds/Moscow-min.png"
 								alt=""
 							/>
 						</div>
@@ -23,7 +23,7 @@
 						>
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Istanbul.png"
+								src="../assets/backgounds/Istanbul-min.png"
 								alt=""
 							/>
 						</div>
@@ -33,13 +33,18 @@
 						<div class="page__card" @click="onClickCity('Minsk')">
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Minsk.png"
+								src="../assets/backgounds/Minsk-min.png"
 								alt=""
 							/>
 						</div>
 						<p class="page__card-caption">Минск</p>
 					</div>
 					<div class="page__card-wrap">
+						<div class="page__card" @click="onClickCity(null)">
+						</div>
+						<p class="page__card-caption">Минимализм</p>
+					</div>
+					<!-- <div class="page__card-wrap">
 						<div class="page__card" @click="onClickCity('Kair')">
 							<img
 								class="page__card-img"
@@ -48,7 +53,7 @@
 							/>
 						</div>
 						<p class="page__card-caption">Каир</p>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -118,12 +123,14 @@ export default {
 .page__card {
 	padding: 0;
 	box-sizing: border-box;
+	background: #f0c040;
 	border: 4px solid rgb(77, 102, 153);
 	box-shadow: 4px 4px rgb(61, 82, 123);
 	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: calc(100% - 32px);
 }
 
 .page__card-img {
