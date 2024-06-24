@@ -17,11 +17,6 @@ export const useGameStore = defineStore('game', {
         moveSpeed: 4,
         gameInterval: null,
         currentCityName: '',
-
-        modes: {
-            free: false,
-            story: false,
-        },
         screens: {
             start: true,
             game: false,
@@ -35,13 +30,6 @@ export const useGameStore = defineStore('game', {
             });
 
             this.screens[name] = true;
-        },
-        setMode(name) {
-            Object.keys(this.modes).forEach(mode => {
-                this.modes[mode] = false;
-            });
-
-            this.modes[name] = true;
         },
         setPipeWidth() {
             const screenHeight = window.innerHeight;

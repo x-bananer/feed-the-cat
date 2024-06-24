@@ -29,7 +29,6 @@ export default {
 	computed: {
 		...mapState(useGameStore, [
             "screens",
-            "modes",
 		]),
 	},	
 	methods: {},

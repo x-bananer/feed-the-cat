@@ -1,7 +1,7 @@
 <template>
 	<div class="page">
 		<div class="page__container">
-			<div class="button blue" @click="onClickChooseMode('free')">
+			<div class="button blue" @click="onClickStart">
 				Кормить котов
 			</div>
 		</div>
@@ -17,9 +17,8 @@ export default {
 	},
 	computed: {},
 	methods: {
-		onClickChooseMode(mode) {
+		onClickStart() {
 			const gameStore = useGameStore();
-            gameStore.setMode(mode);
             gameStore.setScreen('city');
 		},
 	},
