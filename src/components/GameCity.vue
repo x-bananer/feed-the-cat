@@ -53,10 +53,10 @@
 			</div>
 		</div>
 
-		<!-- <div class="button play">PLAY</div>
-    <div class="button pause">PAUSE</div>
-    <div class="button loser">LOSER</div>
-    <div class="button done">DONE</div> -->
+		<!-- <div class="button yellow">PLAY</div>
+    <div class="button blue">PAUSE</div>
+    <div class="button red">LOSER</div>
+    <div class="button green">DONE</div> -->
 	</div>
 </template>
 
@@ -72,6 +72,8 @@ export default {
 		onClickCity(city) {
 			const gameStore = useGameStore();
 			gameStore.setCity(city);
+
+            gameStore.setScreen('game');
 		},
 	},
 	mounted() {},
@@ -94,19 +96,15 @@ export default {
 	overflow: scroll;
 }
 
-.page__header {
-}
-
 .page__title {
 	font-size: 32px;
-}
-
-.page__content {
+    text-align: center;
 }
 
 .page__header + .page__content {
 	margin-top: 32px;
 }
+
 .page__grid {
 	display: flex;
 	flex-wrap: wrap;
@@ -137,5 +135,6 @@ export default {
 .page__card-caption {
 	padding-top: 8px;
 	font-size: 16px;
+    text-align: center;
 }
 </style>

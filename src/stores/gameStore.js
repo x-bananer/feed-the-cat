@@ -14,15 +14,39 @@ export const useGameStore = defineStore('game', {
         rewards: [],
         rewardSize: { width: 60, height: 60 },
         score: 0,
-        moveSpeed: 2,
+        moveSpeed: 3,
         gameInterval: null,
         currentCityName: '',
         currentPipeImage: '',
+
+        modes: {
+            free: false,
+            story: false,
+        },
+        screens: {
+            start: true,
+            game: false,
+            city: false,
+        },
     }),
     actions: {
+        setScreen(name) {
+            Object.keys(this.screens).forEach(screen => {
+                this.screens[screen] = false;
+            });
+
+            this.screens[name] = true;
+        },
+        setMode(name) {
+            Object.keys(this.modes).forEach(mode => {
+                this.modes[mode] = false;
+            });
+
+            this.modes[name] = true;
+        },
         setPipeWidth() {
             const screenHeight = window.innerHeight;
-            const ratio = 70 / 667;
+            const ratio = 100 / 844;
             this.pipeSize.width = screenHeight * ratio;
         },
         setRandomPipeImage() {

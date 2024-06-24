@@ -1,7 +1,7 @@
 <template>
-	<div class="bird" :style="birdStyle">
-		<div class="bird-border">
-			<div class="bird-image"></div>
+	<div class="moving" :style="birdStyle">
+		<div class="moving__border">
+			<div class="moving__image"></div>
 		</div>
 	
 	</div>
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-.bird {
+.moving {
 	width: 60px;
 	height: 60px;
 	position: absolute;
@@ -36,7 +36,7 @@ export default {
     justify-content: center;
 }
 
-.bird-border {
+.moving__border {
 	min-width: 80px;
 	min-height: 80px;
 	width: 80px;
@@ -49,13 +49,13 @@ export default {
 	padding: 8px;
 }
 
-.bird-image {
+.moving__image {
 	width: 100%;
 	height: 100%;
-	background-image: url('../assets/characters/hero-2.png'); /* Укажите правильный путь к вашему изображению */
+	background-image: url('../assets/characters/hero-2.png');
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
-	transform: rotate(25deg); /* Поворот на 45 градусов */
+	transform: rotate(25deg);
 }
 </style>

@@ -96,15 +96,15 @@ input {
 	transform: scale(1.05);
 }
 
-.button.play {
+.button.yellow {
 	background-color: #f0c040;
 }
 
-.button.pause {
+.button.blue {
 	background-color: #6080c0;
 }
 
-.button.loser {
+.button.red {
 	background-color: #c06040;
 }
 
