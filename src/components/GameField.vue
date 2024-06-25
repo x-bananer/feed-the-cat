@@ -7,7 +7,7 @@
 		@touchmove.prevent
 		@touchend.prevent
 	>
-		<div v-if="!isGameRunning && !isGameOver" class="page__outline"></div>
+		<div v-show="!isGameRunning && !isGameOver" class="page__outline"></div>
 		<div class="page__background" :style="backgroundStyle"></div>
 		<GameBird />
 		<GamePipe
@@ -23,22 +23,22 @@
 			:x="reward.x"
 			:y="reward.y"
 		/>
-		<div v-if="!isGameRunning && !isGameOver" class="page__reminder">
+		<div v-show="!isGameRunning && !isGameOver" class="page__reminder">
 			<img class="page__reminder-img" src="../assets/rule.png" alt="" />
 		</div>
-		<div v-if="!isFinalNotice" class="page__caption">
+		<div v-show="!isFinalNotice" class="page__caption">
 			Собрано: {{ score }}
 		</div>
-		<div v-if="isFinalNotice" class="notice">
+		<div v-show="isFinalNotice" class="notice">
 			<div class="notice__container">
 				<p class="notice__title">
 					{{ score ? finalMessage.title : "Коту под хвост" }}
 				</p>
-				<p class="notice__description" v-if="score">
+				<p class="notice__description" v-show="score">
 					{{ finalMessage.description }}
 				</p>
 				<p
-					v-else
+					v-show="!score"
 					class="notice__description"
 					style="text-align: center"
 				>
@@ -214,6 +214,7 @@ export default {
 	methods: {
 		handleInteraction(event) {
 			if (this.isGameOver) return;
+			
 			event.preventDefault();
 
 			const currentTime = Date.now();
