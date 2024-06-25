@@ -42,7 +42,7 @@
 					<div class="page__card-wrap">
 						<div class="page__card" @click="onClickCity(null)">
 						</div>
-						<p class="page__card-caption">Минимализм</p>
+						<p class="page__card-caption">Ничего</p>
 					</div>
 				</div>
 			</div>
