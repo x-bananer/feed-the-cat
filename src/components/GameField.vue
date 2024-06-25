@@ -189,7 +189,6 @@ export default {
 		backgroundImages() {
 			return {
 				Moscow: require("@/assets/backgounds/Moscow.png"),
-				Kair: require("@/assets/backgounds/Kair.png"),
 				Istanbul: require("@/assets/backgounds/Istanbul.png"),
 				Minsk: require("@/assets/backgounds/Minsk.png"),
 			};

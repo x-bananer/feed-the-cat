@@ -10,7 +10,7 @@
 						<div class="page__card" @click="onClickCity('Moscow')">
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Moscow-min.png"
+								src="../assets/backgounds/Moscow.png"
 								alt=""
 							/>
 						</div>
@@ -23,7 +23,7 @@
 						>
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Istanbul-min.png"
+								src="../assets/backgounds/Istanbul.png"
 								alt=""
 							/>
 						</div>
@@ -33,7 +33,7 @@
 						<div class="page__card" @click="onClickCity('Minsk')">
 							<img
 								class="page__card-img"
-								src="../assets/backgounds/Minsk-min.png"
+								src="../assets/backgounds/Minsk.png"
 								alt=""
 							/>
 						</div>
@@ -44,16 +44,6 @@
 						</div>
 						<p class="page__card-caption">Минимализм</p>
 					</div>
-					<!-- <div class="page__card-wrap">
-						<div class="page__card" @click="onClickCity('Kair')">
-							<img
-								class="page__card-img"
-								src="../assets/backgounds/Kair.png"
-								alt=""
-							/>
-						</div>
-						<p class="page__card-caption">Каир</p>
-					</div> -->
 				</div>
 			</div>
 			<div class="page__button">
@@ -150,7 +140,7 @@ export default {
 
 .page__card-caption {
 	padding-top: 8px;
-	font-size: 16px;
+	font-size: 18px;
     text-align: center;
 	color: white;
 }

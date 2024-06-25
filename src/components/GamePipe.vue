@@ -41,12 +41,10 @@ export default {
 		pipeColorClass() {
 			const vars = {
 				Minsk: 'pipe-green',
-				Kair: 'pipe-green',
 				Moscow: 'pipe-red',
 				Istanbul: 'pipe-red',
 			}
 			return vars[this.currentCityName] || 'pipe-green';
-			//if (this.currentCityName === 'Minsk' || this.currentCityName === 'Kair')
 		},	
 	},
 };

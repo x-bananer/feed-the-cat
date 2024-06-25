@@ -5,7 +5,7 @@
 			<ol class="page__list">
 				<li class="page__item">1. «Тап», чтобы лететь. Остальное сделает гравитация.</li>
                 <li class="page__item">2. Собирайте кошачий корм во время полета.</li>
-                <li class="page__item">3. Спускайтесь на землю и кормите бездомных котиков по всему миру (ну, почти).</li>
+                <li class="page__item">3. Спускайтесь на землю и кормите бездомных котиков</li>
             </ol>
             <div class="page__button">
                 <button class="button yellow" @click="onClickBack">
