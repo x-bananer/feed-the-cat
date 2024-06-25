@@ -56,6 +56,11 @@
 					</div> -->
 				</div>
 			</div>
+			<div class="page__button">
+                <button class="button red" @click="onClickBack">
+                    Назад
+                </button>
+            </div>
 		</div>
 
 		<!-- <div class="button yellow">PLAY</div>
@@ -80,6 +85,10 @@ export default {
 
             gameStore.setScreen('game');
 		},
+		onClickBack() {
+			const gameStore = useGameStore();
+            gameStore.setScreen('start');
+		},
 	},
 	mounted() {},
 	beforeUnmount() {},
@@ -95,6 +104,8 @@ export default {
 	position: relative;
 }
 .page__container {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 	background: #f0c040;
 	padding: 40px 20px 40px 20px;
@@ -104,6 +115,7 @@ export default {
 .page__title {
 	font-size: 32px;
     text-align: center;
+	color: white;
 }
 
 .page__header + .page__content {
@@ -143,5 +155,11 @@ export default {
 	padding-top: 8px;
 	font-size: 16px;
     text-align: center;
+	color: white;
+}
+
+.page__button {
+	padding-top: 20px;
+    margin-top: auto;
 }
 </style>

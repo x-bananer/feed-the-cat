@@ -22,6 +22,7 @@ export const useGameStore = defineStore('game', {
             start: true,
             game: false,
             city: false,
+            rules: false,
         },
     }),
     actions: {

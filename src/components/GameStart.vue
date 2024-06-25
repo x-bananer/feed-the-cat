@@ -1,13 +1,17 @@
 <template>
 	<div class="page">
 		<div class="page__container">
-			<p class="page__text page__text-lined">Летай</p>
+			<!-- <p class="page__text page__text-lined">Летай</p>
 			<p class="page__text page__text-lined">Корми котов</p>
-			<p class="page__text">Получай «мур»</p>
-			<div class="page__button button green" @click="onClickStart">Кормить котов</div>
-			<div class="page__logo">
-				<img class="page__logo-img" src="../assets/logo.png" alt="Корми котов">
+			<p class="page__text">Получай «мур»</p> -->
+			<div class="page__button">
+				<div class=" button green" @click="onClickStart">Кормить котов</div>
+				<div class=" button blue" @click="onClickToRules">Правила игры</div>
 			</div>
+			
+			<!-- <div class="page__logo">
+				<img class="page__logo-img" src="../assets/logo.png" alt="Корми котов">
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -31,6 +35,10 @@ export default {
 			const gameStore = useGameStore();
 			gameStore.setScreen("city");
 		},
+		onClickToRules() {
+			const gameStore = useGameStore();
+			gameStore.setScreen("rules");
+		},	
 	},
 };
 </script>
@@ -43,6 +51,10 @@ export default {
 	position: relative;
 	padding: 20px;
 	background: #f0c040;
+	background-image: url('../assets/start.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 .page__container {
 	display: flex;
@@ -52,16 +64,19 @@ export default {
 	height: 100%;
 	flex-direction: column;
 	padding: 24px 16px;
-	border: 3px solid #FFF;
-	border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+	/* border: 3px solid #FFF;
+	border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%; */
 	text-transform: uppercase;
-	background: #6080c0;
+	background: rgba(240, 192, 64, 0.8);
 	position: relative;
 	text-align: center;
 	color: #FFF;
+
+	border: 4px solid #c09933;
+	box-shadow: 4px 4px #997a29;
 }
 
-.page__container::before {
+/* .page__container::before {
 	content: "";
 	border: 2px solid #353535;
 	display: block;
@@ -72,7 +87,7 @@ export default {
 	left: 50%;
 	transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
 	border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
-}
+} */
 
 .page__logo {
 	padding: 20px 0;

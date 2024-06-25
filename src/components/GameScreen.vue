@@ -9,6 +9,9 @@
         <template v-if="screens.game">
             <GameField />
         </template>
+		<template v-if="screens.rules">
+            <GameRules />
+        </template>
 	</div>
 </template>
 
@@ -18,6 +21,7 @@ import { useGameStore } from "@/stores/gameStore";
 import GameField from "@/components/GameField.vue";
 import GameStart from "@/components/GameStart.vue";
 import GameCity from "@/components/GameCity.vue";
+import GameRules from "@/components/GameRules.vue";
 
 export default {
 	name: "App",
@@ -25,6 +29,7 @@ export default {
 		GameField,
 		GameStart,
 		GameCity,
+		GameRules,
 	},
 	computed: {
 		...mapState(useGameStore, [
