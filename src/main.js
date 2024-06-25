@@ -10,7 +10,6 @@ app.use(pinia);
 app.mount('#app');
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Запрещаем масштабирование при двойном клике
     var lastTouchEnd = 0;
 
     document.addEventListener('touchend', function (event) {
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lastTouchEnd = now;
     }, false);
 
-    // Запрещаем жесты масштабирования
     document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
     });
@@ -34,3 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     });
 });
+
+setTimeout(() => {
+    let vh = window.innerHeight * 0.01 - 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    window.addEventListener('resize', () => {
+        let vh = window.innerHeight * 0.01 - 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+}, 100);

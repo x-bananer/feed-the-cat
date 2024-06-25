@@ -90,14 +90,14 @@ export default {
 <style scoped>
 .page {
 	width: 100%;
-	height: 100vh;
+	height: calc(var(--vh, 1vh)*100);
 	overflow: hidden;
 	position: relative;
 }
 .page__container {
 	height: 100%;
 	background: #f0c040;
-	padding: 40px 20px 140px 20px;
+	padding: 40px 20px 40px 20px;
 	overflow: scroll;
 }
 

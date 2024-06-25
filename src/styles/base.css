@@ -5,6 +5,8 @@
     font-style: normal;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&family=Roboto+Mono:wght@700&display=swap');
+
 * {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none;    /* Firefox */
@@ -15,7 +17,7 @@
 
 html,
 body {
-	min-height: 100vh;
+	min-height: calc(var(--vh, 1vh)*100);
 	scrollbar-gutter: stable;
 	font-size: 16px;
 	touch-action: manipulation;

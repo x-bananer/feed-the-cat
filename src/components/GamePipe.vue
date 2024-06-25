@@ -32,7 +32,7 @@ export default {
 			return {
 				width: `${this.pipeWidth}px`,
 				left: `${this.x}px`,
-				height: `calc(100vh - ${this.height + 200}px)`,
+				height: `calc((var(--vh, 1vh)*100) - ${this.height + 200}px)`,
 				top: `${this.height + 200}px`,
 			};
 		},

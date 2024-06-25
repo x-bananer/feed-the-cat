@@ -8,6 +8,7 @@ export const useGameStore = defineStore('game', {
         birdVelocity: 0,
         gravity: 0.5,
         isGameOver: false,
+        isFinalNotice: false,
         isGameRunning: false,
         pipes: [],
         pipeSize: { width: 80, gap: 200 },
@@ -207,7 +208,7 @@ export const useGameStore = defineStore('game', {
                             this.birdPosition.y += speed;
                             if (this.birdPosition.y > window.innerHeight + 50) {
                                 clearInterval(fallInterval);
-                                this.isGameOver = true;
+                                this.isFinalNotice = true;
                             }
                         }, 20);
                     }, 0);
@@ -215,9 +216,11 @@ export const useGameStore = defineStore('game', {
             }, 20);
         },
         resetGame() {
+            this.playSound('/audio/swoosh.wav');
             this.birdPosition = { x: 100, y: 300 };
             this.birdVelocity = 0;
             this.isGameOver = false;
+            this.isFinalNotice = false;
             this.isGameRunning = false;
             this.pipes = [];
             this.rewards = [];
@@ -236,6 +239,15 @@ export const useGameStore = defineStore('game', {
         },
         setCity(city) {
             this.currentCityName = city;
+        },
+        resetState() {
+            this.screens = {
+                start: true,
+                game: false,
+                city: false,
+            };
+
+            clearInterval(this.gameInterval);
         }
     },
     getters: {
