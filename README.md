@@ -1,4 +1,4 @@
-# fly-bird
+# Feed The Cat
 
 ## Project setup
 ```
