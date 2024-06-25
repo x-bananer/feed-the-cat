@@ -4,14 +4,16 @@
 			<!-- <p class="page__text page__text-lined">Летай</p>
 			<p class="page__text page__text-lined">Корми котов</p>
 			<p class="page__text">Получай «мур»</p> -->
+			<div class="page__logo">
+				<img class="page__logo-img" src="../assets/logo-2.png" alt="Корми котов">
+			</div>
+
 			<div class="page__button">
 				<div class=" button green" @click="onClickStart">Кормить котов</div>
 				<div class=" button blue" @click="onClickToRules">Правила игры</div>
 			</div>
 			
-			<!-- <div class="page__logo">
-				<img class="page__logo-img" src="../assets/logo.png" alt="Корми котов">
-			</div> -->
+			
 		</div>
 	</div>
 </template>
@@ -92,21 +94,23 @@ export default {
 } */
 
 .page__logo {
-	padding: 20px 0;
-	height: 230px;
-	width: 224px;
+	width: 100px;
+	position: relative;
+	right: -100px;
+	margin-top: -120px;
 }
 
 .page__logo-img {
 	width: 100%;
 	height: 100%;
+	position: relative;
+	z-index: 15;
 }
 
 .page__button {
 	position: relative;
 	z-index: 10;
-	margin-top: 60px;
-	margin: auto;
+	margin-top: -10px;
 }
 
 .page__text {
