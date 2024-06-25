@@ -51,7 +51,7 @@ export const useGameStore = defineStore('game', {
             const gameHeight = window.innerHeight;
 
             if (this.birdPosition.y > gameHeight - this.birdSize.height || this.birdPosition.y < 0) {
-                this.playSound('/audio/hit-4.wav');
+                this.playSound('./audio/hit-4.wav');
                 this.endGame();
                 return;
             }
@@ -68,7 +68,7 @@ export const useGameStore = defineStore('game', {
                 const birdInGap = this.birdPosition.y > pipeGapTop && birdBottom < pipeGapBottom;
 
                 if (horizontalCollision && !birdInGap) {
-                    this.playSound('/audio/hit-4.wav');
+                    this.playSound('./audio/hit-4.wav');
                     this.endGame();
                     return;
                 }
@@ -84,7 +84,7 @@ export const useGameStore = defineStore('game', {
                 const verticalCollision = this.birdPosition.y < rewardBottom && birdBottom > reward.y;
 
                 if (horizontalCollision && verticalCollision) {
-                    this.playSound('/audio/point-2.wav');
+                    this.playSound('./audio/point-2.wav');
                     this.score += 1;
                     return false;
                 }
@@ -189,7 +189,7 @@ export const useGameStore = defineStore('game', {
             clearInterval(this.gameInterval);
 
             setTimeout(() => {
-                this.playSound('/audio/die-2.wav');
+                this.playSound('./audio/die-2.wav');
             }, 100);
 
             this.animateFall();
@@ -217,7 +217,7 @@ export const useGameStore = defineStore('game', {
             }, 20);
         },
         resetGame() {
-            this.playSound('/audio/swoosh.wav');
+            this.playSound('./audio/swoosh.wav');
             this.birdPosition = { x: 100, y: 300 };
             this.birdVelocity = 0;
             this.isGameOver = false;
