@@ -62,15 +62,12 @@
                 </button>
             </div>
 		</div>
-
-		<!-- <div class="button yellow">PLAY</div>
-    <div class="button blue">PAUSE</div>
-    <div class="button red">LOSER</div>
-    <div class="button green">DONE</div> -->
 	</div>
 </template>
 
 <script>
+// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 import { useGameStore } from "@/stores/gameStore";
 
 export default {

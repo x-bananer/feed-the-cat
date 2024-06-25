@@ -1,3 +1,5 @@
+// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 

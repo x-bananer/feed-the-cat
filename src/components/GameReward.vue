@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 const images = [1, 2, 3];
 
 export default {

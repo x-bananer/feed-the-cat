@@ -16,6 +16,8 @@
 </template>
 
 <script>
+// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 import { mapState } from "pinia";
 import { useGameStore } from "@/stores/gameStore";
 import GameField from "@/components/GameField.vue";
