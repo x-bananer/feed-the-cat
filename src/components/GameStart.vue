@@ -27,6 +27,7 @@ export default {
 	methods: {
 		onClickStart() {
 			const src = require("../assets/audio/meow.wav");
+			console.log('');
 			const audio = new Audio(src);
 			audio.play().catch((error) => {
 				console.error("Error playing sound:", error);
