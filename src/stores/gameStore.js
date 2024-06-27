@@ -1,4 +1,4 @@
-// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
@@ -137,27 +137,16 @@ export const useGameStore = defineStore('game', {
                 rewardY = Math.floor(Math.random() * (window.innerHeight - this.rewardSize.height));
                 isOverlapping = false;
         
-                const rewardRight = rewardX + this.rewardSize.width;
-                const rewardBottom = rewardY + this.rewardSize.height;
-        
                 for (const pipe of this.pipes) {
-                    const pipeRight = pipe.x + this.pipeSize.width;
-                    const pipeGapTop = pipe.height;
-                    const pipeGapBottom = pipe.height + this.pipeSize.gap;
-
-                    const pipeTopCollision = (
-                        rewardX < pipeRight &&
-                        rewardRight > pipe.x &&
-                        rewardY < pipeGapTop
-                    );
-
-                    const pipeBottomCollision = (
-                        rewardX < pipeRight &&
-                        rewardRight > pipe.x &&
-                        rewardBottom > pipeGapBottom
-                    );
+                    const pipeTop = pipe.height;
+                    const pipeBottom = pipe.height + this.pipeSize.gap;
+                    const rewardBottom = rewardY + this.rewardSize.height;
         
-                    if (pipeTopCollision || pipeBottomCollision) {
+                    if (
+                        rewardX < pipe.x + this.pipeSize.width &&
+                        rewardX + this.rewardSize.width > pipe.x &&
+                        (rewardY < pipeTop || rewardBottom > pipeBottom)
+                    ) {
                         isOverlapping = true;
                         break;
                     }
@@ -165,14 +154,14 @@ export const useGameStore = defineStore('game', {
         
                 if (!isOverlapping) {
                     for (const reward of this.rewards) {
-                        const existingRewardRight = reward.x + this.rewardSize.width;
-                        const existingRewardBottom = reward.y + this.rewardSize.height;
+                        const rewardBottom = reward.y + this.rewardSize.height;
+                        const newRewardBottom = rewardY + this.rewardSize.height;
         
                         if (
-                            rewardX < existingRewardRight &&
-                            rewardRight > reward.x &&
-                            rewardY < existingRewardBottom &&
-                            rewardBottom > reward.y
+                            rewardX < reward.x + this.rewardSize.width &&
+                            rewardX + this.rewardSize.width > reward.x &&
+                            rewardY < rewardBottom &&
+                            newRewardBottom > reward.y
                         ) {
                             isOverlapping = true;
                             break;
@@ -190,7 +179,7 @@ export const useGameStore = defineStore('game', {
                     y: rewardY
                 });
             }
-        },                                             
+        },                                       
         playSound(src) {
             const audio = new Audio(src);
             audio.play().catch(error => {

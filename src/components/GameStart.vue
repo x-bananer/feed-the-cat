@@ -23,7 +23,7 @@
 	</div>
 </template>
 <script>
-// Copyright © Kseniia Shlenskaia, 2024. All rights reserved.
+
 
 import { useGameStore } from "@/stores/gameStore";
 
