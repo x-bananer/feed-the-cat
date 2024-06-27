@@ -1,6 +1,10 @@
 /* eslint-disable */
 <template>
+	<div class="page page--loader" v-show="loading">
+			<span class="loader"></span>
+		</div>
 	<div
+		v-show="!loading"
 		class="page"
 		@mousedown="handleInteraction"
 		@touchstart="handleInteraction"
@@ -82,6 +86,7 @@ export default {
 			touchStartTime: null,
 			lastInteractionTime: 0,
 			interactionDelay: 100,
+			loading: true,
 		};
 	},
 	computed: {
@@ -259,6 +264,10 @@ export default {
 	},
 	mounted() {
 		this.startGame();
+
+		setTimeout(() => {
+			this.loading = false;	
+		}, 500);
 	},
 	beforeUnmount() {
 		const gameStore = useGameStore();
@@ -287,6 +296,13 @@ export default {
 	height: calc(var(--vh, 1vh) * 100);
 	overflow: hidden;
 	position: relative;
+}
+
+.page--loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f0c040;
 }
 
 .page__background {
@@ -365,5 +381,63 @@ export default {
 .page__reminder-img {
 	width: 200px;
 	height: auto;
+}
+
+.loader {
+	position: relative;
+	width: 164px;
+	height: 164px;
+}
+.loader::before,
+.loader::after {
+	content: "";
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background-color: #fff;
+	left: 50%;
+	top: 50%;
+	animation: rotate 1s ease-in infinite;
+}
+.loader::after {
+	width: 20px;
+	height: 20px;
+	background-color: #6080c0;
+	animation: rotate 1s ease-in infinite, moveY 1s ease-in infinite;
+}
+
+@keyframes moveY {
+	0%,
+	100% {
+		top: 10%;
+	}
+	45%,
+	55% {
+		top: 59%;
+	}
+	60% {
+		top: 40%;
+	}
+}
+@keyframes rotate {
+	0% {
+		transform: translate(-50%, -100%) rotate(0deg) scale(1, 1);
+	}
+	25% {
+		transform: translate(-50%, 0%) rotate(180deg) scale(1, 1);
+	}
+	45%,
+	55% {
+		transform: translate(-50%, 100%) rotate(180deg) scale(3, 0.5);
+	}
+	60% {
+		transform: translate(-50%, 100%) rotate(180deg) scale(1, 1);
+	}
+	75% {
+		transform: translate(-50%, 0%) rotate(270deg) scale(1, 1);
+	}
+	100% {
+		transform: translate(-50%, -100%) rotate(360deg) scale(1, 1);
+	}
 }
 </style>

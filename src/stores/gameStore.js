@@ -125,50 +125,64 @@ export const useGameStore = defineStore('game', {
             });
         },
         spawnReward() {
-            const maxAttempts = 100;
+            const maxAttempts = 200;
             let attempts = 0;
             let rewardX, rewardY;
             let isOverlapping;
-
+        
             do {
                 if (attempts >= maxAttempts) return;
-
+        
                 rewardX = window.innerWidth;
                 rewardY = Math.floor(Math.random() * (window.innerHeight - this.rewardSize.height));
                 isOverlapping = false;
-
+        
+                const rewardRight = rewardX + this.rewardSize.width;
+                const rewardBottom = rewardY + this.rewardSize.height;
+        
                 for (const pipe of this.pipes) {
-                    const pipeTop = pipe.height;
-                    const pipeBottom = pipe.height + this.pipeSize.gap;
-                    const rewardBottom = rewardY + this.rewardSize.height;
+                    const pipeRight = pipe.x + this.pipeSize.width;
+                    const pipeGapTop = pipe.height;
+                    const pipeGapBottom = pipe.height + this.pipeSize.gap;
 
-                    if (
-                        rewardX < pipe.x + this.pipeSize.width && rewardX + this.rewardSize.width > pipe.x &&
-                        (rewardY < pipeTop || rewardBottom > pipeBottom)
-                    ) {
+                    const pipeTopCollision = (
+                        rewardX < pipeRight &&
+                        rewardRight > pipe.x &&
+                        rewardY < pipeGapTop
+                    );
+
+                    const pipeBottomCollision = (
+                        rewardX < pipeRight &&
+                        rewardRight > pipe.x &&
+                        rewardBottom > pipeGapBottom
+                    );
+        
+                    if (pipeTopCollision || pipeBottomCollision) {
                         isOverlapping = true;
                         break;
                     }
                 }
-
+        
                 if (!isOverlapping) {
                     for (const reward of this.rewards) {
-                        const rewardBottom = reward.y + this.rewardSize.height;
-                        const newRewardBottom = rewardY + this.rewardSize.height;
-
+                        const existingRewardRight = reward.x + this.rewardSize.width;
+                        const existingRewardBottom = reward.y + this.rewardSize.height;
+        
                         if (
-                            rewardX < reward.x + this.rewardSize.width && rewardX + this.rewardSize.width > reward.x &&
-                            rewardY < rewardBottom && newRewardBottom > reward.y
+                            rewardX < existingRewardRight &&
+                            rewardRight > reward.x &&
+                            rewardY < existingRewardBottom &&
+                            rewardBottom > reward.y
                         ) {
                             isOverlapping = true;
                             break;
                         }
                     }
                 }
-
+        
                 attempts++;
             } while (isOverlapping);
-
+        
             if (!isOverlapping) {
                 this.rewards.push({
                     id: uuidv4(),
@@ -176,7 +190,7 @@ export const useGameStore = defineStore('game', {
                     y: rewardY
                 });
             }
-        },
+        },                                             
         playSound(src) {
             const audio = new Audio(src);
             audio.play().catch(error => {
