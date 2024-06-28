@@ -27,7 +27,7 @@
 					<img src="../assets/end.png" class="box__image-main">
 					<img src="../assets/end-2.png" class="box__image-back">
 				</div>
-				<p class="page__item">Вы отдадите всё собранное котикам. Если получится...</p>
+				<p class="page__item">В конце игры вы отдадите всё собранное котикам. Если получится...</p>
 				
             </div>
             <div class="page__button">
@@ -102,6 +102,7 @@ export default {
 .box.box--1 {
 	position: relative;
 	height: 100px;
+	margin-top: 20px;
 }
 
 .box.box--1 .box__image-main {
