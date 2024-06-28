@@ -6,7 +6,7 @@ export const useGameStore = defineStore('game', {
         birdPosition: { x: 100, y: 300 },
         birdSize: { width: 60, height: 60 },
         birdVelocity: 0,
-        gravity: 1,
+        gravity: 1.5,
         isGameOver: false,
         isFinalNotice: false,
         isGameRunning: false,
@@ -46,7 +46,7 @@ export const useGameStore = defineStore('game', {
                 this.isGameRunning = true;
                 this.gameAnimationFrame = requestAnimationFrame(this.gameLoop);
             }
-            this.birdVelocity = -12;
+            this.birdVelocity = -15;
         },
         gameLoop() {
             if (!this.isGameRunning) return;
@@ -237,7 +237,7 @@ export const useGameStore = defineStore('game', {
             this.pipes = [];
             this.rewards = [];
             this.score = 0;
-            this.gravity = 1;
+            this.gravity = 1.5;
             this.spawnPipe();
 
             cancelAnimationFrame(this.gameAnimationFrame);
