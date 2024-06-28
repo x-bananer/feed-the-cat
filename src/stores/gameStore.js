@@ -15,7 +15,7 @@ export const useGameStore = defineStore('game', {
         rewards: [],
         rewardSize: { width: 60, height: 60 },
         score: 0,
-        moveSpeed: 6,
+        moveSpeed: 8,
         gameAnimationFrame: null,
         currentCityName: '',
         screens: {
