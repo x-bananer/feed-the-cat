@@ -152,6 +152,7 @@ export default {
 	width: 40px;
 	bottom: 0;
 	right: 0;
+	display: none;
 }
 
 .page__img-2 {
@@ -159,6 +160,7 @@ export default {
     width: 30px;
     bottom: -4px;
     right: 24px;
+	display: none;
 }
 
 .page__img-3 {
@@ -166,6 +168,7 @@ export default {
     top: 56px;
     left: 56px;
     width: 20px;
+	display: none;
 }
 
 .page__img-4 {
@@ -173,6 +176,7 @@ export default {
     top: 8px;
     width: 50px;
     left: 8px;
+	display: none;
 }
 
 

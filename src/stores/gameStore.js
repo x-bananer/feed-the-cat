@@ -1,5 +1,3 @@
-
-
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +6,7 @@ export const useGameStore = defineStore('game', {
         birdPosition: { x: 100, y: 300 },
         birdSize: { width: 60, height: 60 },
         birdVelocity: 0,
-        gravity: 0.5,
+        gravity: 1,
         isGameOver: false,
         isFinalNotice: false,
         isGameRunning: false,
@@ -17,8 +15,8 @@ export const useGameStore = defineStore('game', {
         rewards: [],
         rewardSize: { width: 60, height: 60 },
         score: 0,
-        moveSpeed: 4,
-        gameInterval: null,
+        moveSpeed: 8,
+        gameAnimationFrame: null,
         currentCityName: '',
         screens: {
             start: true,
@@ -26,13 +24,15 @@ export const useGameStore = defineStore('game', {
             city: false,
             rules: false,
         },
+
+        frameCounter: 0,
+        frameSkip: 2,
     }),
     actions: {
         setScreen(name) {
             Object.keys(this.screens).forEach(screen => {
                 this.screens[screen] = false;
             });
-
             this.screens[name] = true;
         },
         setPipeWidth() {
@@ -41,8 +41,23 @@ export const useGameStore = defineStore('game', {
             this.pipeSize.width = screenHeight * ratio;
         },
         fly() {
-            if (!this.isGameRunning) this.isGameRunning = true;
-            this.birdVelocity = -8;
+            if (this.isGameOver) return;
+            if (!this.isGameRunning) {
+                this.isGameRunning = true;
+                this.gameAnimationFrame = requestAnimationFrame(this.gameLoop);
+            }
+            this.birdVelocity = -12;
+        },
+        gameLoop() {
+            if (!this.isGameRunning) return;
+
+            this.frameCounter++;
+
+            if (this.frameCounter % this.frameSkip === 0) {
+                this.fall();
+            }
+
+            this.gameAnimationFrame = requestAnimationFrame(this.gameLoop);
         },
         fall() {
             if (this.isGameOver || !this.isGameRunning) return;
@@ -77,8 +92,6 @@ export const useGameStore = defineStore('game', {
             }
 
             this.rewards = this.rewards.filter(reward => {
-                const birdRight = this.birdPosition.x + this.birdSize.width;
-                const birdBottom = this.birdPosition.y + this.birdSize.height;
                 const rewardRight = reward.x + this.rewardSize.width;
                 const rewardBottom = reward.y + this.rewardSize.height;
 
@@ -94,6 +107,7 @@ export const useGameStore = defineStore('game', {
             });
 
             this.moveElements();
+            return;
         },
         moveElements() {
             this.pipes.forEach(pipe => {
@@ -183,7 +197,7 @@ export const useGameStore = defineStore('game', {
             this.isGameRunning = false;
             this.birdVelocity = 0;
 
-            clearInterval(this.gameInterval);
+            cancelAnimationFrame(this.gameAnimationFrame);
 
             setTimeout(() => {
                 this.playSound('./audio/die.wav');
@@ -223,17 +237,14 @@ export const useGameStore = defineStore('game', {
             this.pipes = [];
             this.rewards = [];
             this.score = 0;
-            this.gravity = 0.5;
+            this.gravity = 1;
             this.spawnPipe();
 
-            clearInterval(this.gameInterval);
+            cancelAnimationFrame(this.gameAnimationFrame);
         },
         startGame() {
             this.resetGame();
-            this.gameInterval = setInterval(() => {
-                if (!this.isGameRunning) return;
-                this.fall();
-            }, 20);
+            this.isGameRunning = false;
         },
         setCity(city) {
             this.currentCityName = city;
@@ -245,7 +256,7 @@ export const useGameStore = defineStore('game', {
                 city: false,
             };
 
-            clearInterval(this.gameInterval);
+            cancelAnimationFrame(this.gameAnimationFrame);
         }
     },
     getters: {

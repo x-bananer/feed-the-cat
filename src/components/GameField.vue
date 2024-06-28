@@ -1,8 +1,8 @@
 /* eslint-disable */
 <template>
 	<div class="page page--loader" v-show="loading">
-			<span class="loader"></span>
-		</div>
+		<span class="loader"></span>
+	</div>
 	<div
 		v-show="!loading"
 		class="page"
@@ -35,10 +35,10 @@
 		</div>
 		<div v-show="isFinalNotice" class="notice">
 			<div class="notice__container">
-				<p class="notice__title">
+				<p class="notice__title" v-if="finalMessage">
 					{{ score ? finalMessage.title : "Коту под хвост" }}
 				</p>
-				<p class="notice__description" v-show="score">
+				<p class="notice__description" v-if="finalMessage" v-show="score">
 					{{ finalMessage.description }}
 				</p>
 				<p
@@ -69,8 +69,6 @@
 </template>
 
 <script>
-
-
 import { mapState } from "pinia";
 import { useGameStore } from "@/stores/gameStore";
 import GameBird from "@/components/GameBird.vue";
@@ -87,100 +85,10 @@ export default {
 			lastInteractionTime: 0,
 			interactionDelay: 100,
 			loading: true,
+			finalMessage: null,
 		};
 	},
 	computed: {
-		finalMessages() {
-			return [
-				{
-					title: "Только у кошек девять жизней",
-					description: `Ваш парашют не раскрылся, и вы упали на старушку. Хорошая новость – неравнодушные прохожие отдали собранную еду ${
-						this.score
-					} ${this.declOfNum(this.score, [
-						"коту",
-						"котам",
-						"котам",
-					])}. Плохая – у старушки не было завещания.`,
-				},
-				{
-					title: "Путь к сердцу кота лежит через желудок",
-					description: `Вам удалось перезапустить реактивный ранец у самой земли и успешно сесть. Результат: ${this.declOfNum(
-						this.score,
-						["накормлен", "накормлены", "накормлено"]
-					)} ${this.score} ${this.declOfNum(this.score, [
-						"кот",
-						"кота",
-						"котов",
-					])}`,
-				},
-				{
-					title: "Держись, котик, я иду",
-					description: `Падая, вы успели заметить кота на крыше и бросили ему корм. ${this.declOfNum(
-						this.score - 1,
-						["Оставшийся", "Оставшиеся", "Оставшиеся"]
-					)} ${this.score - 1} ${this.declOfNum(this.score - 1, [
-						"припас",
-						"припаса",
-						"припасов",
-					])} ${this.declOfNum(this.score - 1, [
-						"канул",
-						"канули",
-						"канули",
-					])} в Лету вместе с вами. К сожалению, вы не умели плавать. `,
-				},
-				{
-					title: "Я кота (не) накормлю",
-					description: `Приземлившись на городскую площадь, вы были атакованы всеядными голубями. Ну а что, ${
-						this.score
-					} ${this.declOfNum(this.score, [
-						"сытая птица",
-						"сытые птицы",
-						"сытых птиц",
-					])} – тоже рекорд. `,
-				},
-				{
-					title: "Котопокалипсис сегодня",
-					description: `Шутка! Не случилось ровным счётом ничего плохого. Вы удачно приземляетесь и получаете ${
-						this.score
-					} «мяу» от ${this.score} ${this.declOfNum(this.score, [
-						"сытого кота",
-						"сытых котов",
-						"сытых котов",
-					])}.`,
-				},
-				{
-					title: "В кототерии что-то перепутали",
-					description: `Кое-как добравшись до земли, вы были рады выставить ${
-						this.score
-					} ${this.declOfNum(this.score, [
-						"полную миску",
-						"полных миски",
-						"полных мисок",
-					])} отборного корма перед довольными котами. Правда, надев очки, вы поняли, что кормите опоссумов. `,
-				},
-				{
-					title: "Поймай, если сможешь",
-					description: `Из-за неисправного ранца вы крутились в воздухе так, что собранный корм разлетелся по всему городу. Интересно, достанется ли он котам? Количество накормленных: неизвестно.`,
-				},
-				{
-					title: "Ты не пройдешь",
-					description: `…мимо голодного кота. На земле вас встречает ${
-						this.score
-					} ${this.declOfNum(this.score, [
-						"пушистик",
-						"пушистика",
-						"пушистиков",
-					])} – и ${
-						this.score > 1 ? "каждый" : ""
-					} получает своё угощение. «Мур» еще никогда не был таким приятным.`,
-				},
-			];
-		},
-		finalMessage() {
-			return this.finalMessages[
-				Math.floor(Math.random() * this.finalMessages.length)
-			];
-		},
 		...mapState(useGameStore, [
 			"pipes",
 			"rewards",
@@ -216,9 +124,102 @@ export default {
 		},
 	},
 	methods: {
+		setFinalMessage() {
+			const finalMessages = this.setFinalMessages(this.score);
+
+			this.finalMessage = finalMessages[
+				Math.floor(Math.random() * finalMessages.length)
+			];
+		},	
+		setFinalMessages(score) {
+			return [
+				{
+					title: "Только у кошек девять жизней",
+					description: `Ваш парашют не раскрылся, и вы упали на старушку. Хорошая новость – неравнодушные прохожие отдали собранную еду ${
+						score
+					} ${this.declOfNum(score, [
+						"коту",
+						"котам",
+						"котам",
+					])}. Плохая – у старушки не было завещания.`,
+				},
+				{
+					title: "Путь к сердцу кота лежит через желудок",
+					description: `Вам удалось перезапустить реактивный ранец у самой земли и успешно сесть. Результат: ${this.declOfNum(
+						score,
+						["накормлен", "накормлены", "накормлено"]
+					)} ${score} ${this.declOfNum(score, [
+						"кот",
+						"кота",
+						"котов",
+					])}`,
+				},
+				{
+					title: "Держись, котик, я иду",
+					description: `Падая, вы успели заметить кота на крыше и бросили ему корм. ${this.declOfNum(
+						score - 1,
+						["Оставшийся", "Оставшиеся", "Оставшиеся"]
+					)} ${score - 1} ${this.declOfNum(score - 1, [
+						"припас",
+						"припаса",
+						"припасов",
+					])} ${this.declOfNum(score - 1, [
+						"канул",
+						"канули",
+						"канули",
+					])} в Лету вместе с вами. К сожалению, вы не умели плавать. `,
+				},
+				{
+					title: "Я кота (не) накормлю",
+					description: `Приземлившись на городскую площадь, вы были атакованы всеядными голубями. Ну а что, ${
+						score
+					} ${this.declOfNum(score, [
+						"сытая птица",
+						"сытые птицы",
+						"сытых птиц",
+					])} – тоже рекорд. `,
+				},
+				{
+					title: "Котопокалипсис сегодня",
+					description: `Шутка! Не случилось ровным счётом ничего плохого. Вы удачно приземляетесь и получаете ${
+						score
+					} «мяу» от ${score} ${this.declOfNum(score, [
+						"сытого кота",
+						"сытых котов",
+						"сытых котов",
+					])}.`,
+				},
+				{
+					title: "В кототерии что-то перепутали",
+					description: `Кое-как добравшись до земли, вы были рады выставить ${
+						score
+					} ${this.declOfNum(score, [
+						"полную миску",
+						"полных миски",
+						"полных мисок",
+					])} отборного корма перед довольными котами. Правда, надев очки, вы поняли, что кормите опоссумов. `,
+				},
+				{
+					title: "Поймай, если сможешь",
+					description: `Из-за неисправного ранца вы крутились в воздухе так, что собранный корм разлетелся по всему городу. Интересно, достанется ли он котам? Количество накормленных: неизвестно.`,
+				},
+				{
+					title: "Ты не пройдешь",
+					description: `…мимо голодного кота. На земле вас встречает ${
+						score
+					} ${this.declOfNum(score, [
+						"пушистик",
+						"пушистика",
+						"пушистиков",
+					])} – и ${
+						score > 1 ? "каждый" : ""
+					} получает своё угощение. «Мур» еще никогда не был таким приятным.`,
+				},
+			];
+		},
 		handleInteraction(event) {
 			if (this.isGameOver) return;
-			
+
 			event.preventDefault();
 
 			const currentTime = Date.now();
@@ -266,24 +267,26 @@ export default {
 		this.startGame();
 
 		setTimeout(() => {
-			this.loading = false;	
+			this.loading = false;
 		}, 500);
 	},
 	beforeUnmount() {
 		const gameStore = useGameStore();
-		clearInterval(gameStore.gameInterval);
+		cancelAnimationFrame(gameStore.gameAnimationFrame);
 	},
 	watch: {
 		isGameOver(newVal) {
+			this.setFinalMessage();
+
 			const gameStore = useGameStore();
 			if (newVal) {
-				clearInterval(gameStore.gameInterval);
+				cancelAnimationFrame(gameStore.gameAnimationFrame);
 			}
 		},
 		isGameRunning(newVal) {
 			const gameStore = useGameStore();
 			if (!newVal) {
-				clearInterval(gameStore.gameInterval);
+				cancelAnimationFrame(gameStore.gameAnimationFrame);
 			}
 		},
 	},
