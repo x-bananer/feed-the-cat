@@ -272,7 +272,7 @@ export default {
 	},
 	beforeUnmount() {
 		const gameStore = useGameStore();
-		cancelAnimationFrame(gameStore.gameAnimationFrame);
+		clearInterval(gameStore.gameInterval);
 	},
 	watch: {
 		isGameOver(newVal) {
@@ -280,13 +280,13 @@ export default {
 
 			const gameStore = useGameStore();
 			if (newVal) {
-				cancelAnimationFrame(gameStore.gameAnimationFrame);
+				clearInterval(gameStore.gameInterval);
 			}
 		},
 		isGameRunning(newVal) {
 			const gameStore = useGameStore();
 			if (!newVal) {
-				cancelAnimationFrame(gameStore.gameAnimationFrame);
+				clearInterval(gameStore.gameInterval);
 			}
 		},
 	},

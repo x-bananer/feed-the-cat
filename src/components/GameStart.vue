@@ -22,10 +22,10 @@
 		</div>
 	</div>
 </template>
+
 <script>
-
-
 import { useGameStore } from "@/stores/gameStore";
+import { mapState } from "pinia";
 
 export default {
 	data() {
@@ -35,16 +35,21 @@ export default {
 			loading: true,
 		};
 	},
-	computed: {},
+	computed: {
+		...mapState(useGameStore, [
+			"isSoundOn",
+		]),
+	},	
 	methods: {
 		onClickStart() {
-			const src = require("../assets/audio/meow.wav");
-			console.log('');
-			const audio = new Audio(src);
-			audio.play().catch((error) => {
-				console.error("Error playing sound:", error);
-			});
-
+			if (this.isSoundOn) {
+				const src = require("../assets/audio/meow.wav");
+				const audio = new Audio(src);
+				audio.play().catch((error) => {
+					console.error("Error playing sound:", error);
+				});
+			}
+			
 			const gameStore = useGameStore();
 			gameStore.setScreen("city");
 		},
