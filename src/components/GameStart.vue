@@ -5,30 +5,55 @@
 	<div class="page" v-show="!loading">
 		<div class="page__container">
 			<div class="page__logo">
-				<img class="image page__logo-img" src="../assets/logo-2.png" alt="Корми котов">
+				<img
+					class="image page__logo-img"
+					src="../assets/logo-2.png"
+					alt="Корми котов"
+				/>
 			</div>
 
-			<img class="image page__img-1" src="../assets/food/Food-1.png">
-			<img class="image page__img-2" src="../assets/food/Food-2.png">
-			<img class="image page__img-3" src="../assets/food/Food-3.png">
-			<img class="image page__img-4" src="../assets/characters/hero-2.png">
+			<img class="image page__img-1" src="../assets/food/Food-1.png" />
+			<img class="image page__img-2" src="../assets/food/Food-2.png" />
+			<img class="image page__img-3" src="../assets/food/Food-3.png" />
+			<img
+				class="image page__img-4"
+				src="../assets/characters/hero-2.png"
+			/>
 
 			<div class="page__button">
-				<div class=" button green" @click="onClickStart">Кормить котов</div>
-				<div class=" button blue" @click="onClickToRules">Правила игры</div>
+				<div class="button green" @click="onClickStart">
+					Кормить котов
+				</div>
+				<div class="button blue" @click="onClickToRules">
+					Правила игры
+				</div>
 			</div>
-			<div class="page__box">
-				<div class="page__text">
-				Скорость игры
-			</div>
-			<div class="page__grid">
-				<div class=" button " @click="onClickSetSpeed(3)" :class="moveSpeed === 3 ? 'red' : 'yellow'">1</div>
-				<div class=" button " @click="onClickSetSpeed(4)" :class="moveSpeed === 4 ? 'red' : 'yellow'">2</div>
-				<div class=" button " @click="onClickSetSpeed(5)" :class="moveSpeed === 5 ? 'red' : 'yellow'">3</div>
-			</div>
-			</div>
-			
-			
+			<!-- <div class="page__box">
+				<div class="page__text">Скорость игры</div>
+				<div class="page__grid">
+					<div
+						class="button"
+						@click="onClickSetSpeed(3)"
+						:class="moveSpeed === 3 ? 'red' : 'yellow'"
+					>
+						1
+					</div>
+					<div
+						class="button"
+						@click="onClickSetSpeed(4)"
+						:class="moveSpeed === 4 ? 'red' : 'yellow'"
+					>
+						2
+					</div>
+					<div
+						class="button"
+						@click="onClickSetSpeed(5)"
+						:class="moveSpeed === 5 ? 'red' : 'yellow'"
+					>
+						3
+					</div>
+				</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -46,16 +71,13 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(useGameStore, [
-			"isSoundOn",
-			"moveSpeed"
-		]),
-	},	
+		...mapState(useGameStore, ["isSoundOn", "moveSpeed"]),
+	},
 	methods: {
 		onClickSetSpeed(value) {
 			const gameStore = useGameStore();
 			gameStore.setMoveSpeed(value);
-		},	
+		},
 		onClickStart() {
 			if (this.isSoundOn) {
 				const src = require("../assets/audio/meow.wav");
@@ -64,14 +86,14 @@ export default {
 					console.error("Error playing sound:", error);
 				});
 			}
-			
+
 			const gameStore = useGameStore();
 			gameStore.setScreen("city");
 		},
 		onClickToRules() {
 			const gameStore = useGameStore();
 			gameStore.setScreen("rules");
-		},	
+		},
 		imageLoaded() {
 			this.imagesLoaded += 1;
 			if (this.imagesLoaded >= this.totalImages) {
@@ -106,12 +128,10 @@ export default {
 </script>
 
 <style scoped>
-
-.page__text { 
+.page__text {
 	font-size: 20px;
 	margin-bottom: 16px;
 }
-
 
 .page__grid {
 	display: grid;
@@ -133,7 +153,7 @@ export default {
 	position: relative;
 	padding: 20px;
 	background: #f0c040;
-	background-image: url('../assets/start.png');
+	background-image: url("../assets/start.png");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -161,7 +181,7 @@ export default {
 	background: rgba(240, 192, 64, 0.8);
 	position: relative;
 	text-align: center;
-	color: #FFF;
+	color: #fff;
 
 	border: 4px solid #c09933;
 	box-shadow: 4px 4px #997a29;
@@ -197,28 +217,27 @@ export default {
 
 .page__img-2 {
 	position: absolute;
-    width: 30px;
-    bottom: -4px;
-    right: 24px;
+	width: 30px;
+	bottom: -4px;
+	right: 24px;
 	display: none;
 }
 
 .page__img-3 {
-    position: absolute;
-    top: 56px;
-    left: 56px;
-    width: 20px;
+	position: absolute;
+	top: 56px;
+	left: 56px;
+	width: 20px;
 	display: none;
 }
 
 .page__img-4 {
 	position: absolute;
-    top: 8px;
-    width: 50px;
-    left: 8px;
+	top: 8px;
+	width: 50px;
+	left: 8px;
 	display: none;
 }
-
 
 .loader {
 	position: relative;
