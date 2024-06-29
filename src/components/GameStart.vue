@@ -17,6 +17,16 @@
 				<div class=" button green" @click="onClickStart">Кормить котов</div>
 				<div class=" button blue" @click="onClickToRules">Правила игры</div>
 			</div>
+			<div class="page__box">
+				<div class="page__text">
+				Скорость игры
+			</div>
+			<div class="page__grid">
+				<div class=" button " @click="onClickSetSpeed(3)" :class="moveSpeed === 3 ? 'red' : 'yellow'">1</div>
+				<div class=" button " @click="onClickSetSpeed(4)" :class="moveSpeed === 4 ? 'red' : 'yellow'">2</div>
+				<div class=" button " @click="onClickSetSpeed(5)" :class="moveSpeed === 5 ? 'red' : 'yellow'">3</div>
+			</div>
+			</div>
 			
 			
 		</div>
@@ -38,9 +48,14 @@ export default {
 	computed: {
 		...mapState(useGameStore, [
 			"isSoundOn",
+			"moveSpeed"
 		]),
 	},	
 	methods: {
+		onClickSetSpeed(value) {
+			const gameStore = useGameStore();
+			gameStore.setMoveSpeed(value);
+		},	
 		onClickStart() {
 			if (this.isSoundOn) {
 				const src = require("../assets/audio/meow.wav");
@@ -91,6 +106,26 @@ export default {
 </script>
 
 <style scoped>
+
+.page__text { 
+	font-size: 20px;
+	margin-bottom: 16px;
+}
+
+
+.page__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 12px;
+	grid-row-gap: 0px;
+}
+
+.page__box {
+	margin-top: 60px;
+	text-align: center;
+}
+
 .page {
 	width: 100%;
 	height: calc(var(--vh, 1vh) * 100);

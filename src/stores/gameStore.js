@@ -27,6 +27,9 @@ export const useGameStore = defineStore('game', {
         isSoundOn: false,
     }),
     actions: {
+        setMoveSpeed(value) {
+            this.moveSpeed = value;
+        },
         setSoundState(state) {
             this.isSoundOn = state;
         },
